@@ -50,7 +50,7 @@ export default async function LandingPage() {
   ];
 
   const plans = [
-    { name: "Ücretsiz", price: "0", credits: "50", models: ["Haiku"], color: "from-gray-500 to-gray-600", popular: false },
+    { name: "Free", price: "0", credits: "20", models: ["Haiku"], color: "from-gray-500 to-gray-600", popular: false },
     { name: "Starter", price: "9", credits: "500", models: ["Haiku", "Sonnet"], color: "from-amber-500 to-orange-600", popular: false },
     { name: "Pro", price: "29", credits: "2.000", models: ["Haiku", "Sonnet", "Opus"], color: "from-purple-500 to-indigo-600", popular: true },
     { name: "Business", price: "99", credits: "10.000", models: ["Haiku", "Sonnet", "Opus"], color: "from-emerald-500 to-teal-600", popular: false },
@@ -182,7 +182,7 @@ export default async function LandingPage() {
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-foreground">
-                <NumberTicker value={50} />
+                <NumberTicker value={20} />
               </div>
               <p className="text-sm text-muted-foreground mt-1">Ücretsiz Kredi</p>
             </div>

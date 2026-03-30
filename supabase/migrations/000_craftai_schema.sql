@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
 );
 
 INSERT INTO subscription_plans (id, name, credits_per_month, price_monthly, allowed_models, sort_order) VALUES
-  ('free',     'Ücretsiz', 50,    0,    '{haiku}',               0),
+  ('free',     'Free',     20,    0,    '{haiku}',               0),
   ('starter',  'Starter',  500,   900,  '{haiku,sonnet}',        1),
   ('pro',      'Pro',      2000,  2900, '{haiku,sonnet,opus}',   2),
   ('business', 'Business', 10000, 9900, '{haiku,sonnet,opus}',   3)
@@ -131,8 +131,8 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
 -- ============================================
 CREATE TABLE IF NOT EXISTS user_credits (
   user_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
-  credits_remaining INTEGER NOT NULL DEFAULT 50,
-  credits_total INTEGER NOT NULL DEFAULT 50,
+  credits_remaining INTEGER NOT NULL DEFAULT 20,
+  credits_total INTEGER NOT NULL DEFAULT 20,
   period_start TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   period_end TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '30 days'),
   updated_at TIMESTAMPTZ DEFAULT NOW()

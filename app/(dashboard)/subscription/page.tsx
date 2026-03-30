@@ -51,7 +51,7 @@ export default function SubscriptionPage() {
 
     // Fetch plans from hardcoded data (no API needed for static plans)
     setPlans([
-      { id: "free", name: "Ücretsiz", credits_per_month: 50, price_monthly: 0, allowed_models: ["haiku"], features: {} },
+      { id: "free", name: "Free", credits_per_month: 20, price_monthly: 0, allowed_models: ["haiku"], features: {} },
       { id: "starter", name: "Starter", credits_per_month: 500, price_monthly: 900, allowed_models: ["haiku", "sonnet"], features: {} },
       { id: "pro", name: "Pro", credits_per_month: 2000, price_monthly: 2900, allowed_models: ["haiku", "sonnet", "opus"], features: {} },
       { id: "business", name: "Business", credits_per_month: 10000, price_monthly: 9900, allowed_models: ["haiku", "sonnet", "opus"], features: {} },
