@@ -6,18 +6,21 @@ import {
   ArrowRight,
   CheckCircle2,
   FileText,
-  Code,
   Globe,
   PenTool,
   Calculator,
-  Palette,
   Search,
   Zap,
   Shield,
   Crown,
   Cpu,
-  BarChart3,
   CreditCard,
+  MapPin,
+  ChefHat,
+  Wallet,
+  ScrollText,
+  Flame,
+  HeartPulse,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
@@ -35,15 +38,15 @@ export default async function LandingPage() {
   const isLoggedIn = !!user;
 
   const skills = [
-    { icon: FileText, title: "PDF Özetleme", desc: "Dokümanları analiz et, özet çıkar", color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950" },
-    { icon: Code, title: "Kod Yardımcısı", desc: "Kod yaz, düzelt, açıkla", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950" },
     { icon: PenTool, title: "İçerik Yazarı", desc: "Blog, LinkedIn, tweet üret", color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950" },
     { icon: Globe, title: "Çevirmen", desc: "97+ dilde profesyonel çeviri", color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-950" },
     { icon: Search, title: "Araştırmacı", desc: "Detaylı araştırma ve rapor", color: "text-teal-500", bg: "bg-teal-50 dark:bg-teal-950" },
-    { icon: Calculator, title: "Soru Çözücü", desc: "Matematik ve fen soruları", color: "text-orange-500", bg: "bg-orange-50 dark:bg-orange-950" },
-    { icon: Palette, title: "Beyin Fırtınası", desc: "Yaratıcı fikirler üret", color: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-950" },
-    { icon: Shield, title: "Metin İnceleme", desc: "Sözleşme ve doküman analizi", color: "text-red-500", bg: "bg-red-50 dark:bg-red-950" },
-    { icon: BarChart3, title: "Veri Analisti", desc: "Veri ve istatistik analizi", color: "text-cyan-500", bg: "bg-cyan-50 dark:bg-cyan-950" },
+    { icon: MapPin, title: "Seyahat Planlayıcı", desc: "Gezi planı ve rota önerisi", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950" },
+    { icon: ChefHat, title: "Yemek Tarifi", desc: "Malzemeye göre tarif öner", color: "text-orange-500", bg: "bg-orange-50 dark:bg-orange-950" },
+    { icon: FileText, title: "CV Yazarı", desc: "Profesyonel özgeçmiş oluştur", color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950" },
+    { icon: ScrollText, title: "Dilekçe Yazarı", desc: "Resmi yazı ve başvuru hazırla", color: "text-red-500", bg: "bg-red-50 dark:bg-red-950" },
+    { icon: Wallet, title: "Bütçe Planı", desc: "Gelir-gider analizi, tasarruf", color: "text-cyan-500", bg: "bg-cyan-50 dark:bg-cyan-950" },
+    { icon: Calculator, title: "Soru Çözücü", desc: "Matematik ve fen soruları", color: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-950" },
   ];
 
   const plans = [
@@ -54,15 +57,15 @@ export default async function LandingPage() {
   ];
 
   const marqueeItems = [
-    { icon: FileText, label: "PDF Özetle" },
-    { icon: Code, label: "Kod Yaz" },
     { icon: PenTool, label: "İçerik Üret" },
     { icon: Globe, label: "Çevir" },
     { icon: Search, label: "Araştır" },
+    { icon: MapPin, label: "Gezi Planla" },
+    { icon: ChefHat, label: "Tarif Bul" },
+    { icon: FileText, label: "CV Oluştur" },
+    { icon: ScrollText, label: "Dilekçe Yaz" },
+    { icon: Wallet, label: "Bütçe Planla" },
     { icon: Calculator, label: "Soru Çöz" },
-    { icon: Palette, label: "Fikir Üret" },
-    { icon: Shield, label: "Analiz Et" },
-    { icon: BarChart3, label: "Veri İncele" },
     { icon: CreditCard, label: "Kredi Yönet" },
   ];
 
@@ -127,12 +130,12 @@ export default async function LandingPage() {
           <div className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
             <WordRotate
               words={[
-                "PDF özetle.",
-                "kod yaz.",
                 "içerik üret.",
+                "seyahat planla.",
+                "tarif bul.",
+                "CV oluştur.",
                 "araştırma yap.",
-                "soru çöz.",
-                "çeviri yap.",
+                "bütçe planla.",
               ]}
               className="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent"
               duration={2500}
@@ -166,7 +169,7 @@ export default async function LandingPage() {
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-foreground">
-                <NumberTicker value={15} />
+                <NumberTicker value={19} />
                 <span className="text-amber-500">+</span>
               </div>
               <p className="text-sm text-muted-foreground mt-1">AI Yeteneği</p>
