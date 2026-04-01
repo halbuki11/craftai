@@ -1,69 +1,59 @@
 # CraftAI — TODO
 
-## Kalan İşler
+## Yapılması Gerekenler
 
-### Yüksek Öncelik
-- [x] Markdown rendering düzeltmesi — tablolar, kod blokları streaming sırasında düzgün render edilmiyor ("code Copy" yazısı çıkıyor)
-- [ ] LaTeX (KaTeX) rendering test — $$ formüller doğru render ediliyor mu kontrol et
-- [x] Free plan token limitini 50K → 15K'ya düşür (kullanıcıyı ücretli plana yönlendirmek için)
-- [ ] Sohbet geçmişi devam etme testi — eski sohbete yazınca aynı thread'den devam ediyor mu doğrula
-- [ ] Görsel/PDF yükleme testi — sürükle-bırak, yapıştır, dosya seçme hepsi çalışıyor mu
-- [ ] OpenAI API key ekle — GPT-4o ve GPT-4o Mini modelleri aktif etmek için
+### Yüksek Öncelik (Launch Blockers)
+- [ ] Stripe entegrasyonu — key'leri ekle, checkout test et, Pro plan ($19/mo) aktif et
+- [ ] OpenAI API key ekle sunucuya — yoksa GPT modellerini kaldır
+- [ ] Gerçek kullanıcı testi — 5-10 kişiye göster, feedback al
 
-### Orta Öncelik
-- [ ] Stripe key'leri ekle — ödeme sistemi aktif etmek için
-- [ ] Deploy — Vercel'e deploy et, environment variables ekle
-- [ ] Custom domain bağla
-- [ ] Mobil responsiveness testi
-- [ ] PDF export özelliği — sohbeti PDF olarak indir
-- [x] Sohbet silme — sidebar'dan sohbet silme butonu
+### Orta Öncelik (Post-Launch)
+- [ ] Sentry/error monitoring entegre et — prod hataları yakala
+- [ ] Google Analytics veya Plausible ekle — trafik takibi
+- [ ] OG Image oluştur — sosyal medya paylaşımları için
+- [ ] Blog/içerik marketing başlat — SEO için
+- [ ] Landing page'e demo/screenshot ekle — ürünü göster
+- [ ] Landing page'e testimonial bölümü ekle — sosyal kanıt
 
-### Düşük Öncelik
-- [x] Sohbet başlığı otomatik güncelleme — ilk mesajdan daha iyi başlık oluştur
-- [x] Sohbet arama — sidebar'da sohbet geçmişinde arama
-- [ ] Kullanıcı profil sayfası düzenleme
-- [ ] Email doğrulama akışı
-- [ ] Forgot password sayfası
-- [ ] PWA desteği (service worker)
-- [ ] Rate limiting (Upstash)
-- [ ] Analytics dashboard (usage sayfası gerçek verilerle)
-
-### Gelecek Özellikler
-- [ ] Gemini modelleri ekle (Google AI)
-- [ ] Groq modelleri ekle (Llama, Mixtral — ultra hızlı)
-- [ ] Skill oluşturucu — kullanıcılar kendi skill'lerini oluşturabilsin
-- [ ] Skill marketplace — kullanıcılar skill paylaşabilsin
-- [ ] Dosya geçmişi — yüklenen dosyalar kaydedilsin
-- [ ] Sesli mesaj desteği (Whisper transkripsiyon)
-- [ ] Gerçek zamanlı sohbet paylaşma (link ile)
-- [ ] Team/workspace desteği
-- [ ] API erişimi (geliştiriciler için)
+### Düşük Öncelik (Gelecek)
+- [ ] Upstash Redis ile dağıtık rate limiting (şu an in-memory)
+- [ ] Email ile workspace davet gönderme (şu an sadece DB'ye kaydediliyor)
+- [ ] Kullanıcı profil fotoğrafı
+- [ ] Sohbet klasörleri/etiketleme
+- [ ] Mobil app (React Native veya PWA iyileştirme)
+- [ ] A/B testing landing page
 
 ## Tamamlananlar ✅
-- [x] Chat arayüzü (dark theme, glassmorphism, framer-motion)
-- [x] Streaming API (SSE, Claude + OpenAI)
-- [x] 19 AI skill (SKILL.md format, Anthropic standardı)
-- [x] Skill auto-detection (trigger patterns)
+- [x] Chat (Claude Haiku/Sonnet + GPT-4o/Mini) + streaming
+- [x] 20 AI skill (bilingual trigger patterns)
+- [x] Skill auto-detection
 - [x] / command palette
-- [x] Model seçici (Claude Haiku/Sonnet/Opus, GPT-4o/Mini)
-- [x] Kilitli modeller (plan bazlı)
-- [x] Token bazlı kullanım takibi
-- [x] Supabase Auth (email + Google OAuth)
-- [x] Login/Signup sayfaları
-- [x] Subscription sayfası (Free/Starter/Pro/Business)
-- [x] Sohbet geçmişi kaydetme (notes tablosu)
-- [x] Sidebar sohbet geçmişi (tarih gruplu)
-- [x] Sidebar'dan sohbet yükleme (aynı sayfada)
-- [x] Çoklu tur sohbet devam ettirme
-- [x] Dosya yükleme (görsel, PDF, metin)
-- [x] Sürükle-bırak + clipboard yapıştırma
-- [x] Claude Vision + OpenAI Vision desteği
-- [x] KaTeX LaTeX rendering
-- [x] Markdown rendering (kod blokları, listeler, başlıklar)
-- [x] Login zorunlu (anonim kullanım kapalı)
-- [x] Token göstergesi sidebar'da
-- [x] Sign out
-- [x] CLAUDE.md + README.md dokümantasyon
-- [x] Kullanılmayan dosyalar temizlendi
-- [x] Tüm UI İngilizce
-- [x] Build temiz (0 hata)
+- [x] Model seçici (plan bazlı kilitleme)
+- [x] Token bazlı kullanım + aylık auto-renew
+- [x] Supabase Auth (Google OAuth + email/password)
+- [x] Login/Signup/Forgot Password
+- [x] Fiyatlandırma: Free (50K) + Pro $19/mo (2M)
+- [x] Sohbet geçmişi + silme + arama + otomatik başlık
+- [x] Dosya yükleme (görsel, PDF, metin) + sürükle-bırak
+- [x] Markdown rendering (kod, tablo, liste, başlık)
+- [x] KaTeX LaTeX rendering (Math Solver ile entegre)
+- [x] Smooth streaming (rAF buffer + ayrı state)
+- [x] Sohbet URL persistence (sayfa yenilenince korunur)
+- [x] Chat export (text dosyası)
+- [x] TR/EN lokalizasyon (tüm sayfalar)
+- [x] Dil değiştirme (sidebar toggle)
+- [x] Middleware auth koruması
+- [x] Rate limiting (in-memory)
+- [x] Security headers (X-Frame, CSP, Referrer)
+- [x] PWA (service worker + manifest)
+- [x] Landing page (SEO, karşılaştırma tablosu, FAQ, pricing)
+- [x] Analytics dashboard (7 gün grafik, model dağılımı)
+- [x] Cool & Minimal tema (teal/cyan)
+- [x] Deploy (SSH + nginx + pm2 → aimaa.cloud)
+- [x] Auth callback fix (reverse proxy)
+- [x] Code Writer skill eklendi
+- [x] Tüm Türkçe metinler İngilizce'ye çevrildi
+- [x] Gereksiz sayfalar kaldırıldı (notes, todos, skills, team, files, api-keys)
+- [x] Opus kaldırıldı (maliyet kontrolü)
+- [x] Gemini kaldırıldı (gereksiz karmaşıklık)
+- [x] Sesli mesaj kaldırıldı (gereksiz maliyet)
