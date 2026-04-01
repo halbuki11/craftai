@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Plus, X, MessageSquare, CreditCard, LogIn, LogOut, Loader2, Zap, Trash2, Search, Globe, FolderOpen, Users, Key } from "lucide-react";
+import { Sparkles, Plus, X, MessageSquare, CreditCard, LogIn, LogOut, Loader2, Zap, Trash2, Search, Globe, FolderOpen, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n/context";
 
 interface Conversation {
@@ -312,14 +312,6 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
             {t("files.title")}
           </Link>
 
-          <Link
-            href="/api-keys"
-            onClick={onClose}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-white/50 hover:text-white/90 hover:bg-white/[0.04] transition-colors"
-          >
-            <Key className="w-4 h-4" />
-            {t("api.title")}
-          </Link>
 
           <Link
             href="/subscription"
