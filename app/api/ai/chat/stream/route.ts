@@ -153,8 +153,6 @@ RULES:
     // Route to correct provider
     if (config.provider === 'openai') {
       return streamOpenAI(config, systemPrompt, messages, encoder, preferredModel, message, user, noteId);
-    } else if (config.provider === 'google') {
-      return streamGemini(config, systemPrompt, messages, encoder, preferredModel, message, user, noteId);
     } else {
       return streamClaude(config, systemPrompt, messages, encoder, preferredModel, message, user, noteId);
     }
@@ -325,103 +323,6 @@ function streamOpenAI(
         controller.close();
       } catch (error) {
         logger.error('OpenAI stream error', error instanceof Error ? error : undefined);
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', content: 'Something went wrong.' })}\n\n`));
-        controller.close();
-      }
-    },
-  });
-
-  return new Response(readableStream, { headers: sseHeaders() });
-}
-
-// ─── Gemini (Google AI) ──────────────────────────────────────
-
-function streamGemini(
-  config: ReturnType<typeof getModelConfig>,
-  systemPrompt: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  messages: any[],
-  encoder: TextEncoder,
-  modelId: ModelId,
-  originalMessage: string,
-  user: { id: string } | null,
-  existingNoteId?: string,
-) {
-  const readableStream = new ReadableStream({
-    async start(controller) {
-      try {
-        const { getGeminiClient } = await import('@/lib/ai/gemini');
-        const ai = getGeminiClient();
-
-        // Convert messages to Gemini format
-        const geminiHistory: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
-        for (const msg of messages.slice(0, -1)) {
-          const role = msg.role === 'assistant' ? 'model' : 'user';
-          const text = typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content);
-          geminiHistory.push({ role, parts: [{ text }] });
-        }
-
-        const lastMsg = messages[messages.length - 1];
-        const userText = typeof lastMsg.content === 'string' ? lastMsg.content : JSON.stringify(lastMsg.content);
-
-        const stream = await ai.models.generateContentStream({
-          model: config.apiModel,
-          config: {
-            maxOutputTokens: config.maxTokens,
-            temperature: 0.4,
-            systemInstruction: systemPrompt,
-          },
-          contents: [
-            ...geminiHistory,
-            { role: 'user', parts: [{ text: userText }] },
-          ],
-        });
-
-        let fullText = '';
-        let inputTokens = 0;
-        let outputTokens = 0;
-
-        for await (const chunk of stream) {
-          const text = chunk.text || '';
-          if (text) {
-            fullText += text;
-            controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify({ type: 'text', content: text })}\n\n`)
-            );
-          }
-          if (chunk.usageMetadata) {
-            inputTokens = chunk.usageMetadata.promptTokenCount || 0;
-            outputTokens = chunk.usageMetadata.candidatesTokenCount || 0;
-          }
-        }
-
-        const totalTokens = inputTokens + outputTokens;
-        const savedNoteId = await saveConversation(user, originalMessage, fullText, existingNoteId);
-
-        let tokensRemaining: number | undefined;
-        if (user) {
-          const deduction = await deductTokens({
-            userId: user.id,
-            tokens: totalTokens,
-            model: modelId,
-            source: 'web',
-          });
-          tokensRemaining = deduction.remaining;
-        }
-
-        controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify({
-            type: 'done',
-            model: modelId,
-            provider: 'google',
-            noteId: savedNoteId,
-            tokens: { input: inputTokens, output: outputTokens, total: totalTokens },
-            tokensRemaining,
-          })}\n\n`)
-        );
-        controller.close();
-      } catch (error) {
-        logger.error('Gemini stream error', error instanceof Error ? error : undefined);
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', content: 'Something went wrong.' })}\n\n`));
         controller.close();
       }

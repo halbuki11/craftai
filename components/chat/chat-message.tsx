@@ -39,8 +39,6 @@ const MODEL_LABELS: Record<string, string> = {
   opus: "Claude Opus 4.6",
   "gpt-4o": "GPT-4o",
   "gpt-4o-mini": "GPT-4o Mini",
-  "gemini-flash": "Gemini 2.0 Flash",
-  "gemini-pro": "Gemini 2.5 Pro",
 };
 
 export function ChatMessage({

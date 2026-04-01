@@ -64,10 +64,8 @@ interface SkillItem {
 
 const MODELS: Record<string, ModelDef> = {
   "gpt-4o-mini": { label: "GPT-4o Mini", provider: "OpenAI", desc: "Fastest & cheapest", apiId: "gpt-4o-mini" },
-  "gemini-flash": { label: "Gemini 2.0 Flash", provider: "Google", desc: "Ultra fast & free", apiId: "gemini-flash" },
   "claude-4.5-haiku": { label: "Claude 4.5 Haiku", provider: "Anthropic", desc: "Fast & efficient", apiId: "haiku" },
   "gpt-4o": { label: "GPT-4o", provider: "OpenAI", desc: "Versatile & popular", apiId: "gpt-4o" },
-  "gemini-pro": { label: "Gemini 2.5 Pro", provider: "Google", desc: "Google's best", apiId: "gemini-pro" },
   "claude-sonnet-4.6": { label: "Claude Sonnet 4.6", provider: "Anthropic", desc: "Balanced performance", apiId: "sonnet" },
   "claude-opus-4.6": { label: "Claude Opus 4.6", provider: "Anthropic", desc: "Most powerful", apiId: "opus" },
 };
@@ -105,10 +103,10 @@ export function ChatView() {
             const planId = d.subscription?.plan_id || "free";
             // Fetch allowed models from plan
             const planModels: Record<string, string[]> = {
-              free: ["haiku", "gpt-4o-mini", "gemini-flash"],
-              starter: ["haiku", "gpt-4o-mini", "gemini-flash", "sonnet", "gpt-4o", "gemini-pro"],
-              pro: ["haiku", "gpt-4o-mini", "gemini-flash", "sonnet", "gpt-4o", "gemini-pro", "opus"],
-              business: ["haiku", "gpt-4o-mini", "gemini-flash", "sonnet", "gpt-4o", "gemini-pro", "opus"],
+              free: ["haiku", "gpt-4o-mini"],
+              starter: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o"],
+              pro: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o", "opus"],
+              business: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o", "opus"],
             };
             setAllowedModels(planModels[planId] || ["haiku"]);
           }).catch(() => setAllowedModels(["haiku"]));
@@ -826,13 +824,6 @@ export function ChatView() {
                             {currentModel.provider === "Anthropic" ? (
                               <svg fill="#fff" fillRule="evenodd" className="w-4 h-4 opacity-70" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z" />
-                              </svg>
-                            ) : currentModel.provider === "Google" ? (
-                              <svg className="w-4 h-4 opacity-70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L2 19.5h20L12 2z" fill="#4285F4" />
-                                <path d="M12 2L2 19.5h10V2z" fill="#EA4335" />
-                                <path d="M12 8l-5 11.5h10L12 8z" fill="#FBBC05" />
-                                <path d="M12 8l5 11.5h-10L12 8z" fill="#34A853" />
                               </svg>
                             ) : currentModel.provider === "OpenAI" ? (
                               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 opacity-70" viewBox="0 0 256 260" fill="#fff">
