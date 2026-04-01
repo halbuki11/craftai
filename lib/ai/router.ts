@@ -40,78 +40,78 @@ export interface RouterResult {
   response_message: string;
 }
 
-const SYSTEM_PROMPT = `Sen güçlü bir AI asistansın. Kullanıcının mesajını analiz et ve doğru aksiyonu belirle. Sen sadece not tutan bir uygulama DEĞİLSİN — sen iş yapan bir asistansın.
+const SYSTEM_PROMPT = `You are a powerful AI assistant. Analyze the user's message and determine the correct action. You are NOT just a note-taking app — you are an action-performing assistant.
 
-DESTEKLENEN AKSİYONLAR:
+SUPPORTED ACTIONS:
 
-📧 gmail_draft - Mail isteniyorsa taslak oluştur
+📧 gmail_draft - Create email draft when email is requested
    params: { to, subject, body }
-   - "to": e-posta veya kişi ismi. "Ali'ye" → to="Ali"
-   - "subject": bağlamdan uygun konu
-   - "body": kullanıcının söylediklerinden profesyonel mail yaz. UYDURMA, sadece söylenenleri kullan.
+   - "to": email or contact name
+   - "subject": appropriate subject from context
+   - "body": write a professional email from what the user said. Do NOT fabricate, only use what was said.
 
-📅 calendar_add - Etkinlik/randevu ekle
+📅 calendar_add - Add event/appointment
    params: { title, datetime, duration, description }
 
-⏰ reminder_set - Hatırlatma kur
+⏰ reminder_set - Set a reminder
    params: { message, remind_at }
 
-✅ todo_create - Görev oluştur
+✅ todo_create - Create a task
    params: { title, due_date, priority }
 
-✍️ create_content - İçerik üret (blog yazısı, LinkedIn postu, sosyal medya, tweet, teklif, rapor, metin vb.)
+✍️ create_content - Generate content (blog post, LinkedIn post, social media, tweet, proposal, report, etc.)
    params: { content_type, topic, tone, length, content }
    - content_type: "blog" | "linkedin" | "tweet" | "instagram" | "email_template" | "proposal" | "report" | "general"
-   - topic: konu
-   - tone: "professional" | "casual" | "friendly" | "formal" (varsayılan: professional)
-   - length: "short" | "medium" | "long" (varsayılan: medium)
-   - content: OLUŞTURULMUŞ İÇERİK. Tam, yayına hazır içerik yaz. Başlık, gövde, hashtag (varsa) dahil.
+   - topic: the subject
+   - tone: "professional" | "casual" | "friendly" | "formal" (default: professional)
+   - length: "short" | "medium" | "long" (default: medium)
+   - content: THE GENERATED CONTENT. Write complete, publish-ready content. Include title, body, hashtags (if applicable).
 
-🎨 generate_image - Görsel üret (DALL-E)
+🎨 generate_image - Generate image (DALL-E)
    params: { prompt, style }
-   - prompt: İngilizce, detaylı görsel açıklaması yaz
+   - prompt: write detailed visual description in English
    - style: "realistic" | "artistic" | "minimal" | "cartoon"
 
-🔍 web_research - Web araştırma / URL özetle
+🔍 web_research - Web research / summarize URL
    params: { query, url }
-   - Kullanıcı URL verdiyse url alanına yaz
-   - Genel araştırma istiyorsa query alanına yaz
+   - If user provided a URL, put it in the url field
+   - For general research, put it in the query field
 
-📄 analyze_document - Görsel/döküman analizi (kullanıcı fotoğraf/PDF gönderdiğinde)
+📄 analyze_document - Image/document analysis (when user sends a photo/PDF)
    params: { instruction }
-   - instruction: kullanıcının analiz talebi
+   - instruction: the user's analysis request
 
-💬 quick_answer - Hızlı soru cevabı (genel bilgi sorusu, çeviri, hesaplama vb.)
+💬 quick_answer - Quick Q&A (general knowledge, translation, calculation, etc.)
    params: { question, answer }
-   - question: sorulan soru
-   - answer: DETAYLI ve FAYDALI cevap yaz. Kısa değil, açıklayıcı ol.
+   - question: the question asked
+   - answer: write a DETAILED and HELPFUL answer. Be thorough, not brief.
 
-📝 note_save - SADECE kullanıcı açıkça "not al", "kaydet" dediğinde
+📝 note_save - ONLY when user explicitly says "save", "take note", etc.
    params: {}
 
-💡 summarize - Metin özetleme
+💡 summarize - Text summarization
    params: {}
 
-KURALLAR:
-- Mesajın dilini algıla ve İÇERİK DAHİL aynı dilde yaz
-- Tarih/saat: ISO 8601. Kullanıcı saat dilimi: __TIMEZONE__
-- Şu an: __NOW__
-- create_content'te İÇERİĞİ KENDİN YAZ. "content" alanı boş olmasın, tam metin üret.
-- quick_answer'da CEVABI KENDİN YAZ. "answer" alanı boş olmasın.
-- Hiçbir aksiyona uymuyorsa quick_answer kullan
-- note_save otomatik ekleme, sadece istendiğinde
-- confidence 0.7 altındaysa ekleme
+RULES:
+- Detect the message language and write CONTENT in the same language
+- Dates/times: ISO 8601. User timezone: __TIMEZONE__
+- Current time: __NOW__
+- In create_content, WRITE THE CONTENT YOURSELF. The "content" field must not be empty.
+- In quick_answer, WRITE THE ANSWER YOURSELF. The "answer" field must not be empty.
+- If no action fits, use quick_answer
+- Do not auto-add note_save, only when explicitly requested
+- If confidence is below 0.7, do not include the action
 
-JSON FORMATI (SADECE JSON DÖNDÜR, başka metin ekleme):
+JSON FORMAT (RETURN ONLY JSON, no extra text):
 {
-  "detected_language": "ISO 639-1 kodu",
+  "detected_language": "ISO 639-1 code",
   "actions": [
     {"type": "action_type", "params": {...}, "confidence": 0.0-1.0}
   ],
-  "formatted_content": "Düzenlenmiş içerik",
-  "title": "Kısa başlık (max 50 karakter)",
-  "tags": ["etiket1"],
-  "response_message": "Kullanıcıya kısa onay mesajı"
+  "formatted_content": "Formatted content",
+  "title": "Short title (max 50 chars)",
+  "tags": ["tag1"],
+  "response_message": "Brief confirmation message to user"
 }`;
 
 export async function routeMessage(
@@ -121,13 +121,13 @@ export async function routeMessage(
   model?: ModelId
 ): Promise<RouterResult> {
   const tz = timezone || 'Europe/Istanbul';
-  const nowLocal = new Date().toLocaleString('tr-TR', { timeZone: tz, dateStyle: 'short', timeStyle: 'short' });
+  const nowLocal = new Date().toLocaleString('en-US', { timeZone: tz, dateStyle: 'short', timeStyle: 'short' });
   let systemPrompt = SYSTEM_PROMPT
     .replace('__TIMEZONE__', tz)
     .replace('__NOW__', nowLocal);
 
   if (context?.userInfo) {
-    systemPrompt += `\n\nKULLANICI BİLGİSİ: ${context.userInfo}`;
+    systemPrompt += `\n\nUSER INFO: ${context.userInfo}`;
   }
 
   // Build messages for Claude
@@ -177,94 +177,55 @@ export async function routeMessage(
  */
 export async function analyzeImage(imageUrl: string, instruction?: string, model?: ModelId): Promise<string> {
   const claude = (await import('./claude')).getClaudeClient();
-  const { getModelConfig } = await import('./model-config');
-  const config = getModelConfig(model || DEFAULT_MODEL);
-
-  // Fetch image as base64
-  const res = await fetch(imageUrl);
-  const buffer = await res.arrayBuffer();
-  const base64 = Buffer.from(buffer).toString('base64');
-  const mediaType = res.headers.get('content-type') || 'image/jpeg';
 
   const response = await claude.messages.create({
-    model: config.apiModel,
-    max_tokens: 2000,
+    model: model === 'opus' ? 'claude-opus-4-6' : 'claude-sonnet-4-6',
+    max_tokens: 4096,
     messages: [
       {
         role: 'user',
         content: [
           {
             type: 'image',
-            source: {
-              type: 'base64',
-              media_type: mediaType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
-              data: base64,
-            },
+            source: { type: 'url', url: imageUrl },
           },
           {
             type: 'text',
-            text: instruction || 'Bu görseli detaylı analiz et. İçeriğini, önemli bilgileri ve varsa metinleri açıkla.',
+            text: instruction || 'Analyze this image in detail. Describe what you see and any relevant information.',
           },
         ],
       },
     ],
   });
 
-  const textBlock = response.content.find(b => b.type === 'text');
-  return textBlock?.text || 'Analiz yapılamadı.';
+  return response.content[0]?.type === 'text' ? response.content[0].text : '';
 }
 
 /**
- * Generate an image using DALL-E (stays on OpenAI)
+ * Web research — placeholder for future implementation
  */
-export async function generateImage(prompt: string, style?: string): Promise<string> {
-  const styledPrompt = style
-    ? `${prompt}, ${style} style`
-    : prompt;
+export async function webResearch(query?: string, url?: string): Promise<string> {
+  if (url) {
+    return `Research requested for URL: ${url}. Web fetching is not yet implemented.`;
+  }
+  if (query) {
+    return `Research requested: ${query}. Web search is not yet implemented.`;
+  }
+  return 'No query or URL provided.';
+}
 
-  const response = await getOpenAI().images.generate({
+/**
+ * Generate an image using DALL-E
+ */
+export async function generateImage(prompt: string, style?: string): Promise<{ url: string }> {
+  const openai = getOpenAI();
+  const response = await openai.images.generate({
     model: 'dall-e-3',
-    prompt: styledPrompt,
+    prompt: style ? `${style} style: ${prompt}` : prompt,
     n: 1,
     size: '1024x1024',
     quality: 'standard',
   });
 
-  return response.data?.[0]?.url || '';
-}
-
-/**
- * Research a topic or summarize a URL using Claude
- */
-export async function webResearch(query?: string, url?: string, model?: ModelId): Promise<string> {
-  let content = '';
-
-  if (url) {
-    try {
-      const res = await fetch(url, {
-        headers: { 'User-Agent': 'CraftAI/1.0' },
-        signal: AbortSignal.timeout(10000),
-      });
-      const html = await res.text();
-      content = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-        .replace(/<[^>]+>/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .substring(0, 8000);
-    } catch {
-      content = 'URL içeriği alınamadı.';
-    }
-  }
-
-  const userMessage = url
-    ? `Bu web sayfasının içeriğini özetle ve önemli noktaları çıkar:\n\nURL: ${url}\n\nİçerik:\n${content}`
-    : `Şu konuyu araştır ve kapsamlı bilgi ver: ${query}`;
-
-  return sendClaudeMessage({
-    model: model || DEFAULT_MODEL,
-    system: 'Sen bir araştırma asistanısın. Verilen konu veya içerik hakkında kapsamlı, doğru ve faydalı bilgi sun. Türkçe yaz (kullanıcı farklı dilde sormadıysa).',
-    messages: [{ role: 'user', content: userMessage }],
-    maxTokens: 3000,
-  });
+  return { url: response.data?.[0]?.url || '' };
 }

@@ -82,7 +82,7 @@ export async function routeAction(
     logger.error(`Action failed: ${action.type}`, error as Error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Aksiyon başarısız',
+      error: error instanceof Error ? error.message : 'Action failed',
     };
   }
 }

@@ -8,6 +8,10 @@ const SKILLS_DIR = path.join(process.cwd(), 'content', 'skills');
 
 let cachedSkills: Skill[] | null = null;
 
+/**
+ * Load skills from SKILL.md folder structure.
+ * Each skill lives in: content/skills/{skill-name}/SKILL.md
+ */
 export function loadSkills(): Skill[] {
   if (cachedSkills) return cachedSkills;
 
@@ -16,40 +20,64 @@ export function loadSkills(): Skill[] {
     return cachedSkills;
   }
 
-  const files = fs.readdirSync(SKILLS_DIR).filter(f => f.endsWith('.md'));
+  const entries = fs.readdirSync(SKILLS_DIR, { withFileTypes: true });
 
-  cachedSkills = files.map(file => {
-    const raw = fs.readFileSync(path.join(SKILLS_DIR, file), 'utf-8');
-    const { data, content } = matter(raw);
+  cachedSkills = entries
+    .filter((entry) => {
+      if (!entry.isDirectory()) return false;
+      const skillFile = path.join(SKILLS_DIR, entry.name, 'SKILL.md');
+      return fs.existsSync(skillFile);
+    })
+    .map((entry) => {
+      const skillDir = path.join(SKILLS_DIR, entry.name);
+      const skillFile = path.join(skillDir, 'SKILL.md');
+      const raw = fs.readFileSync(skillFile, 'utf-8');
+      const { data, content } = matter(raw);
 
-    return {
-      id: data.name || file.replace('.md', ''),
-      title: data.title || data.name || file.replace('.md', ''),
-      description: data.description || '',
-      category: (data.category || 'general') as SkillCategory,
-      icon: data.icon || 'sparkles',
-      defaultModel: (data.default_model || 'sonnet') as ModelId,
-      creditMultiplier: data.credit_multiplier ?? 1.0,
-      requiresFile: data.requires_file ?? false,
-      minPlan: data.min_plan || 'free',
-      tags: data.tags || [],
-      triggerPatterns: data.trigger_patterns || [],
-      systemPrompt: content.trim(),
-    } satisfies Skill;
-  });
+      // Load references if they exist
+      let references = '';
+      const refsDir = path.join(skillDir, 'references');
+      if (fs.existsSync(refsDir)) {
+        const refFiles = fs.readdirSync(refsDir).filter((f) => f.endsWith('.md'));
+        for (const ref of refFiles) {
+          references += '\n\n' + fs.readFileSync(path.join(refsDir, ref), 'utf-8');
+        }
+      }
+
+      const systemPrompt = references
+        ? content.trim() + '\n\n---\n' + references.trim()
+        : content.trim();
+
+      return {
+        id: data.name || entry.name,
+        title: data.title || entry.name,
+        description: data.description || '',
+        category: (data.category || 'general') as SkillCategory,
+        icon: data.icon || 'sparkles',
+        defaultModel: (data.default_model || 'sonnet') as ModelId,
+        creditMultiplier: data.credit_multiplier ?? 1.0,
+        requiresFile: data.requires_file ?? false,
+        minPlan: data.min_plan || 'free',
+        tags: data.tags || [],
+        triggerPatterns: data.trigger_patterns || [],
+        systemPrompt,
+        // New fields from SKILL.md format
+        hasScripts: fs.existsSync(path.join(skillDir, 'scripts')),
+        hasAssets: fs.existsSync(path.join(skillDir, 'assets')),
+      } satisfies Skill;
+    });
 
   return cachedSkills;
 }
 
 export function getSkillById(id: string): Skill | undefined {
-  return loadSkills().find(s => s.id === id);
+  return loadSkills().find((s) => s.id === id);
 }
 
 export function getSkillsByCategory(category: SkillCategory): Skill[] {
-  return loadSkills().filter(s => s.category === category);
+  return loadSkills().filter((s) => s.category === category);
 }
 
-/** Invalidate cache (for dev hot-reload) */
 export function invalidateSkillCache(): void {
   cachedSkills = null;
 }

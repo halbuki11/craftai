@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { User, Mail, Calendar, Globe, Shield, Cpu } from "lucide-react";
 import { TimezoneSelector } from "@/components/settings/timezone-selector";
 import { ModelSelector } from "@/components/settings/model-selector";
-import { BorderBeam } from "@/components/ui/border-beam";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -17,7 +16,7 @@ export default async function SettingsPage() {
     .single();
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("tr-TR", {
+    return new Date(dateString).toLocaleDateString("en-US", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -28,84 +27,82 @@ export default async function SettingsPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Ayarlar</h1>
-        <p className="text-muted-foreground mt-1">
-          Hesap bilgileriniz ve bağlantılarınız
+        <h1 className="text-2xl font-bold text-white/90">Settings</h1>
+        <p className="text-white/50 mt-1">
+          Your account details and connections
         </p>
       </div>
 
       <div className="space-y-6">
         {/* Account Info */}
-        <div className="relative bg-card border border-border rounded-2xl overflow-hidden group hover:border-amber-500/20 transition-colors">
-          <div className="p-5 border-b border-border">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
+          <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">Hesap Bilgileri</h2>
-                <p className="text-xs text-muted-foreground">
-                  Temel hesap bilgileriniz
+                <h2 className="text-lg font-bold text-white/90">Account Info</h2>
+                <p className="text-xs text-white/40">
+                  Your basic account details
                 </p>
               </div>
             </div>
           </div>
 
           <div className="p-5 space-y-1">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-border">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="p-1.5 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
-                  <Mail className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-white/[0.06]">
+              <div className="flex items-center gap-3 text-white/50">
+                <div className="p-1.5 bg-violet-500/10 rounded-lg">
+                  <Mail className="w-4 h-4 text-violet-400" />
                 </div>
-                <span className="text-sm font-medium">E-posta</span>
+                <span className="text-sm font-medium">Email</span>
               </div>
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-sm font-semibold text-white/90">
                 {user.email}
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-border">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="p-1.5 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
-                  <Calendar className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-white/[0.06]">
+              <div className="flex items-center gap-3 text-white/50">
+                <div className="p-1.5 bg-violet-500/10 rounded-lg">
+                  <Calendar className="w-4 h-4 text-violet-400" />
                 </div>
-                <span className="text-sm font-medium">Kayıt Tarihi</span>
+                <span className="text-sm font-medium">Joined</span>
               </div>
-              <span className="text-sm font-semibold text-foreground">
-                {user.created_at ? formatDate(user.created_at) : "Bilinmiyor"}
+              <span className="text-sm font-semibold text-white/90">
+                {user.created_at ? formatDate(user.created_at) : "Unknown"}
               </span>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="p-1.5 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
-                  <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <div className="flex items-center gap-3 text-white/50">
+                <div className="p-1.5 bg-emerald-500/10 rounded-lg">
+                  <Shield className="w-4 h-4 text-emerald-400" />
                 </div>
-                <span className="text-sm font-medium">Hesap Durumu</span>
+                <span className="text-sm font-medium">Status</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                  Aktif
+                <span className="text-sm font-semibold text-emerald-400">
+                  Active
                 </span>
               </div>
             </div>
           </div>
-
-          <BorderBeam colorFrom="#f59e0b" colorTo="#ea580c" size={60} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
         {/* Timezone */}
-        <div className="relative bg-card border border-border rounded-2xl overflow-hidden group hover:border-amber-500/20 transition-colors">
-          <div className="p-5 border-b border-border">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
+          <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-xl">
                 <Globe className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">Saat Dilimi</h2>
-                <p className="text-xs text-muted-foreground">
-                  Takvim ve hatırlatmalar için saat dilimi
+                <h2 className="text-lg font-bold text-white/90">Timezone</h2>
+                <p className="text-xs text-white/40">
+                  Timezone for calendar and reminders
                 </p>
               </div>
             </div>
@@ -113,20 +110,19 @@ export default async function SettingsPage() {
           <div className="p-5">
             <TimezoneSelector currentTimezone={profile?.timezone || "Europe/Istanbul"} />
           </div>
-          <BorderBeam colorFrom="#3b82f6" colorTo="#6366f1" size={60} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
         {/* AI Model */}
-        <div className="relative bg-card border border-border rounded-2xl overflow-hidden group hover:border-amber-500/20 transition-colors">
-          <div className="p-5 border-b border-border">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
+          <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
                 <Cpu className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">AI Model</h2>
-                <p className="text-xs text-muted-foreground">
-                  Varsayılan AI modelinizi seçin
+                <h2 className="text-lg font-bold text-white/90">AI Model</h2>
+                <p className="text-xs text-white/40">
+                  Choose your default AI model
                 </p>
               </div>
             </div>
@@ -137,7 +133,6 @@ export default async function SettingsPage() {
               allowedModels={["haiku", "sonnet", "opus"]}
             />
           </div>
-          <BorderBeam colorFrom="#f59e0b" colorTo="#ea580c" size={60} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
       </div>

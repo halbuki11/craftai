@@ -5,10 +5,10 @@ import { getRecentHistory, getUserContext } from '@/lib/ai/memory';
 import { routeAction } from '@/lib/actions/router';
 import { saveNote } from '@/lib/actions/note-saver';
 import { recordDelivery } from '@/lib/database/deliveries';
-import { checkCredits, checkModelAccess } from '@/lib/credits/check';
-import { deductCredits } from '@/lib/credits/deduct';
+import { checkTokens, checkModelAccess } from '@/lib/credits/check';
+import { deductTokens } from '@/lib/credits/deduct';
 import { resolveSkill, buildSkillPrompt } from '@/lib/skills/registry';
-import { type ModelId, DEFAULT_MODEL, calculateCredits } from '@/lib/ai/model-config';
+import { type ModelId, DEFAULT_MODEL } from '@/lib/ai/model-config';
 import { logger } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
     const effectiveModel = skill?.defaultModel || preferredModel;
 
     // Pre-flight credit check
-    const creditCheck = await checkCredits(user.id, effectiveModel, multiplier);
+    const creditCheck = await checkTokens(user.id);
     if (!creditCheck.allowed) {
-      return NextResponse.json({ error: creditCheck.error, credits_remaining: creditCheck.credits_remaining }, { status: 402 });
+      return NextResponse.json({ error: creditCheck.error, tokens_remaining: creditCheck.tokens_remaining }, { status: 402 });
     }
 
     // Get user context
@@ -125,18 +125,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Deduct credits after successful processing
-    const totalCredits = calculateCredits(effectiveModel, multiplier);
-    const deduction = await deductCredits({
+    // Deduct estimated tokens (non-streaming fallback)
+    await deductTokens({
       userId: user.id,
-      credits: totalCredits,
+      tokens: 2000,
       model: effectiveModel,
-      skillId: skill?.id,
-      actionType: routing.actions[0]?.type,
       source: 'web',
     });
 
-    const response = NextResponse.json({
+    return NextResponse.json({
       response: responseText || routing.response_message,
       type: responseType,
       title: routing.title,
@@ -145,12 +142,6 @@ export async function POST(request: NextRequest) {
       skill: skill?.id || null,
       model: effectiveModel,
     });
-
-    // Add credit headers
-    response.headers.set('X-Credits-Used', String(totalCredits));
-    response.headers.set('X-Credits-Remaining', String(deduction.remaining));
-
-    return response;
 
   } catch (error) {
     logger.error('Chat API error', error instanceof Error ? error : undefined);

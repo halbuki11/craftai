@@ -23,8 +23,12 @@ export interface Skill {
   tags: string[];
   /** Regex patterns for auto-detection */
   triggerPatterns: string[];
-  /** The system prompt template (body of .md file) */
+  /** The system prompt template (body of SKILL.md) */
   systemPrompt: string;
+  /** Whether the skill has executable scripts */
+  hasScripts?: boolean;
+  /** Whether the skill has asset files */
+  hasAssets?: boolean;
 }
 
 export type SkillCategory =
@@ -39,15 +43,15 @@ export type SkillCategory =
   | 'research';
 
 export const CATEGORY_LABELS: Record<SkillCategory, string> = {
-  general: 'Genel',
-  analysis: 'Analiz',
-  writing: 'Yazı',
-  coding: 'Kodlama',
-  translation: 'Çeviri',
-  productivity: 'Üretkenlik',
-  education: 'Eğitim',
-  creative: 'Yaratıcı',
-  research: 'Araştırma',
+  general: 'General',
+  analysis: 'Analysis',
+  writing: 'Writing',
+  coding: 'Coding',
+  translation: 'Translation',
+  productivity: 'Productivity',
+  education: 'Education',
+  creative: 'Creative',
+  research: 'Research',
 };
 
 export const CATEGORY_ICONS: Record<SkillCategory, string> = {

@@ -101,10 +101,10 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
 );
 
 INSERT INTO subscription_plans (id, name, credits_per_month, price_monthly, allowed_models, sort_order) VALUES
-  ('free',     'Free',     20,    0,    '{haiku}',               0),
-  ('starter',  'Starter',  500,   900,  '{haiku,sonnet}',        1),
-  ('pro',      'Pro',      2000,  2900, '{haiku,sonnet,opus}',   2),
-  ('business', 'Business', 10000, 9900, '{haiku,sonnet,opus}',   3)
+  ('free',     'Free',     15000,     0,    '{haiku}',               0),
+  ('starter',  'Starter',  500000,    900,  '{haiku,sonnet}',        1),
+  ('pro',      'Pro',      2000000,   2900, '{haiku,sonnet,opus}',   2),
+  ('business', 'Business', 10000000,  9900, '{haiku,sonnet,opus}',   3)
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================
@@ -131,8 +131,8 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
 -- ============================================
 CREATE TABLE IF NOT EXISTS user_credits (
   user_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
-  credits_remaining INTEGER NOT NULL DEFAULT 20,
-  credits_total INTEGER NOT NULL DEFAULT 20,
+  credits_remaining INTEGER NOT NULL DEFAULT 15000,
+  credits_total INTEGER NOT NULL DEFAULT 15000,
   period_start TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   period_end TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '30 days'),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -246,7 +246,7 @@ BEGIN
   ON CONFLICT (user_id) DO NOTHING;
 
   INSERT INTO public.user_credits (user_id, credits_remaining, credits_total, period_start, period_end)
-  VALUES (NEW.id, 50, 50, NOW(), NOW() + INTERVAL '30 days')
+  VALUES (NEW.id, 15000, 15000, NOW(), NOW() + INTERVAL '30 days')
   ON CONFLICT (user_id) DO NOTHING;
 
   RETURN NEW;
@@ -270,7 +270,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 CREATE TRIGGER update_notes_updated_at BEFORE UPDATE ON notes FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- Atomic credit deduction
+-- Atomic credit deduction (auto-renews any active plan if period expired)
 CREATE OR REPLACE FUNCTION public.deduct_credits(
   p_user_id UUID, p_credits INTEGER, p_model TEXT,
   p_skill_id TEXT DEFAULT NULL, p_action_type TEXT DEFAULT NULL,
@@ -279,18 +279,44 @@ CREATE OR REPLACE FUNCTION public.deduct_credits(
 DECLARE
   v_remaining INTEGER;
   v_period_end TIMESTAMPTZ;
+  v_plan_id TEXT;
+  v_plan_credits INTEGER;
+  v_sub_status TEXT;
 BEGIN
   SELECT uc.credits_remaining, uc.period_end INTO v_remaining, v_period_end
   FROM public.user_credits uc WHERE uc.user_id = p_user_id FOR UPDATE;
 
   IF NOT FOUND THEN
-    RETURN QUERY SELECT FALSE, 0, 'Kredi kaydı bulunamadı'::TEXT; RETURN;
+    RETURN QUERY SELECT FALSE, 0, 'No credit record found'::TEXT; RETURN;
   END IF;
+
+  -- Auto-renew if period expired and plan is still active
   IF v_period_end < NOW() THEN
-    RETURN QUERY SELECT FALSE, 0, 'Kredi dönemi sona erdi'::TEXT; RETURN;
+    SELECT us.plan_id, us.status INTO v_plan_id, v_sub_status
+    FROM public.user_subscriptions us WHERE us.user_id = p_user_id;
+
+    IF v_sub_status = 'active' AND v_plan_id IS NOT NULL THEN
+      SELECT sp.credits_per_month INTO v_plan_credits
+      FROM public.subscription_plans sp WHERE sp.id = v_plan_id;
+
+      v_plan_credits := COALESCE(v_plan_credits, 15000);
+
+      UPDATE public.user_credits SET
+        credits_remaining = v_plan_credits,
+        credits_total = v_plan_credits,
+        period_start = NOW(),
+        period_end = NOW() + INTERVAL '30 days',
+        updated_at = NOW()
+      WHERE user_id = p_user_id;
+
+      v_remaining := v_plan_credits;
+    ELSE
+      RETURN QUERY SELECT FALSE, 0, 'Your plan is not active. Please subscribe.'::TEXT; RETURN;
+    END IF;
   END IF;
+
   IF v_remaining < p_credits THEN
-    RETURN QUERY SELECT FALSE, v_remaining, 'Yetersiz kredi'::TEXT; RETURN;
+    RETURN QUERY SELECT FALSE, v_remaining, 'Not enough tokens remaining. Please upgrade your plan.'::TEXT; RETURN;
   END IF;
 
   UPDATE public.user_credits SET credits_remaining = credits_remaining - p_credits, updated_at = NOW() WHERE user_id = p_user_id;

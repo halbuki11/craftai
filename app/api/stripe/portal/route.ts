@@ -18,7 +18,7 @@ export async function POST() {
       .single();
 
     if (!sub?.stripe_customer_id) {
-      return NextResponse.json({ error: 'Aktif abonelik bulunamadı' }, { status: 404 });
+      return NextResponse.json({ error: 'No active subscription found' }, { status: 404 });
     }
 
     const stripe = getStripe();
@@ -29,6 +29,6 @@ export async function POST() {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    return NextResponse.json({ error: 'Portal oluşturulamadı' }, { status: 500 });
+    return NextResponse.json({ error: 'Could not create portal session' }, { status: 500 });
   }
 }

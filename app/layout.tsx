@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Outfit, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { PWARegister } from "@/components/pwa-register";
 import { ThemeProvider } from "@/components/theme-provider";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
@@ -17,11 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "CraftAI - AI Yeteneklerini Keşfet",
+    default: "CraftAI - AI Skills Platform",
     template: "%s | CraftAI",
   },
-  description: "Tek platform, sınırsız AI yeteneği. PDF özetleme, kod yazma, içerik üretme, araştırma ve daha fazlası. Claude AI ile güçlendirilmiş skill marketplace.",
-  keywords: ["AI", "yapay zeka", "skill", "PDF özetleme", "kod yazma", "içerik üretme", "Claude", "AI marketplace"],
+  description: "One platform, unlimited AI skills. Write code, create content, research, translate, and more. Powered by Claude AI.",
+  keywords: ["AI", "artificial intelligence", "skills", "Claude", "AI platform", "code", "writing", "research"],
   authors: [{ name: "CraftAI" }],
   manifest: "/manifest.json",
   icons: {
@@ -35,10 +36,10 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "tr_TR",
+    locale: "en_US",
     siteName: "CraftAI",
-    title: "CraftAI - AI Yeteneklerini Keşfet",
-    description: "Tek platform, sınırsız AI yeteneği. Claude AI ile güçlendirilmiş skill marketplace.",
+    title: "CraftAI - AI Skills Platform",
+    description: "One platform, unlimited AI skills. Powered by Claude AI.",
   },
   robots: {
     index: true,
@@ -61,10 +62,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${geistMono.variable} font-sans antialiased`}
-      >
+    <html lang="en" className={`dark ${outfit.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
           {children}
           <Toaster />

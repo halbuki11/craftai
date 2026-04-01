@@ -2,39 +2,55 @@
 
 import { useState } from "react";
 import { Sidebar } from "./sidebar";
-import { Header } from "./header";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 interface DashboardShellProps {
-  user: {
-    email?: string;
-    user_metadata?: {
-      avatar_url?: string;
-      full_name?: string;
-    };
-  };
   children: React.ReactNode;
 }
 
-export function DashboardShell({ user, children }: DashboardShellProps) {
+export function DashboardShell({ children }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  const isChatPage = pathname === "/";
 
   return (
     <>
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="md:pl-64">
-        <header className="sticky top-0 z-30 flex h-14 items-center border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6">
+      <Sidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onNewChat={() => {
+          if (pathname !== "/") {
+            window.location.href = "/";
+          } else {
+            window.dispatchEvent(new Event("new-chat"));
+          }
+        }}
+        onLoadChat={(id) => {
+          if (pathname !== "/") {
+            window.location.href = `/?chat=${id}`;
+          } else {
+            window.dispatchEvent(new CustomEvent("load-chat", { detail: id }));
+          }
+        }}
+      />
+      <div className={`md:pl-[260px] ${isChatPage ? "h-screen flex flex-col" : "min-h-screen"}`}>
+        {/* Mobile header */}
+        <header className="sticky top-0 z-30 flex h-11 items-center px-3 flex-shrink-0 md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="md:hidden p-2 -ml-2 mr-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent"
-            aria-label="Menüyü aç"
+            className="p-2 -ml-1 rounded-xl text-white/40 hover:text-white/90 hover:bg-white/[0.05] transition-colors"
+            aria-label="Menü"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <div className="flex-1" />
-          <Header user={user} />
         </header>
-        <main className="p-3 sm:p-4 md:p-6">{children}</main>
+
+        {isChatPage ? (
+          <main className="flex-1 overflow-hidden">{children}</main>
+        ) : (
+          <main className="p-3 sm:p-4 md:p-6">{children}</main>
+        )}
       </div>
     </>
   );

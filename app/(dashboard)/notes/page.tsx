@@ -9,11 +9,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { RealtimeRefresh } from "@/components/realtime-refresh";
-import { NumberTicker } from "@/components/ui/number-ticker";
-import { BorderBeam } from "@/components/ui/border-beam";
 
 export const metadata: Metadata = {
-  title: "Notlarım",
+  title: "Notes",
 };
 
 interface Note {
@@ -33,17 +31,17 @@ function formatRelativeTime(date: string) {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 60) return `${diffMins} dakika önce`;
-  if (diffHours < 24) return `${diffHours} saat önce`;
-  if (diffDays < 7) return `${diffDays} gün önce`;
-  return noteDate.toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return noteDate.toLocaleDateString("en-US", { day: "numeric", month: "short" });
 }
 
 const sourceConfig: Record<string, { icon: typeof Sparkles; label: string; color: string; bg: string }> = {
-  web: { icon: Sparkles, label: "Web", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-100 dark:bg-amber-900/30" },
-  api: { icon: Sparkles, label: "API", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-100 dark:bg-emerald-900/30" },
+  web: { icon: Sparkles, label: "Web", color: "text-violet-400", bg: "bg-violet-500/10" },
+  api: { icon: Sparkles, label: "API", color: "text-indigo-400", bg: "bg-indigo-500/10" },
 };
-const defaultSource = { icon: Sparkles, label: "AI", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-100 dark:bg-amber-900/30" };
+const defaultSource = { icon: Sparkles, label: "AI", color: "text-violet-400", bg: "bg-violet-500/10" };
 
 export default async function NotesPage() {
   const supabase = await createClient();
@@ -72,9 +70,9 @@ export default async function NotesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Notlarım</h1>
-          <p className="text-muted-foreground mt-1">
-            Sesli mesajlarından oluşturulan notlar
+          <h1 className="text-2xl font-bold text-white/90">Notes</h1>
+          <p className="text-white/50 mt-1">
+            Notes generated from your messages
           </p>
         </div>
       </div>
@@ -82,90 +80,80 @@ export default async function NotesPage() {
       {/* Stats */}
       {totalNotes > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-amber-500/30 transition-colors">
+          <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
-                <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              <div className="p-2.5 bg-violet-500/10 rounded-xl">
+                <FileText className="w-5 h-5 text-violet-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">
-                  <NumberTicker value={totalNotes} />
+                <p className="text-2xl font-bold text-white/90">
+                  {totalNotes}
                 </p>
-                <p className="text-sm text-muted-foreground">Toplam Not</p>
+                <p className="text-sm text-white/50">Total Notes</p>
               </div>
             </div>
-            <BorderBeam colorFrom="#f59e0b" colorTo="#ea580c" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-emerald-500/30 transition-colors">
+          <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
-                <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-2.5 bg-indigo-500/10 rounded-xl">
+                <Sparkles className="w-5 h-5 text-indigo-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">
-                  <NumberTicker value={todayNotes} />
+                <p className="text-2xl font-bold text-white/90">
+                  {todayNotes}
                 </p>
-                <p className="text-sm text-muted-foreground">Bugün</p>
+                <p className="text-sm text-white/50">Today</p>
               </div>
             </div>
-            <BorderBeam colorFrom="#10b981" colorTo="#059669" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-orange-500/30 transition-colors">
+          <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-orange-100 dark:bg-orange-900/30 rounded-xl">
-                <CheckSquare className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+              <div className="p-2.5 bg-violet-500/10 rounded-xl">
+                <CheckSquare className="w-5 h-5 text-violet-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">
-                  <NumberTicker value={withActions} />
+                <p className="text-2xl font-bold text-white/90">
+                  {withActions}
                 </p>
-                <p className="text-sm text-muted-foreground">Aksiyonlu</p>
+                <p className="text-sm text-white/50">With Actions</p>
               </div>
             </div>
-            <BorderBeam colorFrom="#f97316" colorTo="#dc2626" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
       )}
 
       {/* Content */}
       {!notes || notes.length === 0 ? (
-        <div className="relative flex flex-col items-center justify-center py-24 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-transparent rounded-3xl" />
-          <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-3xl flex items-center justify-center mb-6 mx-auto">
-              <Sparkles className="w-10 h-10 text-amber-500" />
-            </div>
-            <h2 className="text-xl font-bold text-foreground mb-2">
-              Henüz notunuz yok
-            </h2>
-            <p className="text-muted-foreground max-w-sm mb-6">
-              AI asistanına mesaj göndererek ilk notunuzu oluşturun
-            </p>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity"
-            >
-              <Sparkles className="w-4 h-4" />
-              Mesaj Gönder
-            </Link>
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="w-20 h-20 bg-violet-500/10 rounded-3xl flex items-center justify-center mb-6 mx-auto">
+            <Sparkles className="w-10 h-10 text-violet-400" />
           </div>
+          <h2 className="text-xl font-bold text-white/90 mb-2">
+            No notes yet
+          </h2>
+          <p className="text-white/50 max-w-sm mb-6">
+            Send a message to the AI assistant to create your first note
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#1E1F23] font-semibold rounded-xl hover:opacity-90 transition-opacity"
+          >
+            <Sparkles className="w-4 h-4" />
+            Send Message
+          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {notes.map((note: Note, index: number) => {
+          {notes.map((note: Note) => {
             const config = sourceConfig[note.source] || defaultSource;
             const SourceIcon = config.icon;
-            const isFirst = index === 0;
 
             return (
               <Link
                 key={note.id}
                 href={`/notes/${note.id}`}
-                className="group relative bg-card border border-border rounded-2xl p-5 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-300 overflow-hidden"
+                className="group bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all duration-300"
               >
-                {isFirst && (
-                  <BorderBeam colorFrom="#f59e0b" colorTo="#ea580c" size={60} duration={8} borderWidth={1.5} />
-                )}
                 {/* Source badge */}
                 <div className="flex items-start justify-between mb-4">
                   <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${config.bg}`}>
@@ -174,31 +162,28 @@ export default async function NotesPage() {
                   </div>
                   <div className="flex items-center gap-1.5">
                     {note.has_action_items && (
-                      <div className="p-1.5 bg-orange-100 dark:bg-orange-900/30 rounded-lg" title="Görev içeriyor">
-                        <CheckSquare className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
+                      <div className="p-1.5 bg-violet-500/10 rounded-lg" title="Has tasks">
+                        <CheckSquare className="w-3.5 h-3.5 text-violet-400" />
                       </div>
                     )}
                     {note.has_calendar_event && (
-                      <div className="p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-lg" title="Takvim etkinliği">
-                        <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                      <div className="p-1.5 bg-indigo-500/10 rounded-lg" title="Calendar event">
+                        <Calendar className="w-3.5 h-3.5 text-indigo-400" />
                       </div>
                     )}
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base font-semibold text-foreground mb-4 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                <h3 className="text-base font-semibold text-white/90 mb-4 line-clamp-2 group-hover:text-violet-400 transition-colors">
                   {note.title}
                 </h3>
 
                 {/* Footer */}
-                <div className="flex items-center gap-2 text-muted-foreground">
+                <div className="flex items-center gap-2 text-white/40">
                   <Clock className="w-3.5 h-3.5" />
                   <span className="text-xs">{formatRelativeTime(note.created_at)}</span>
                 </div>
-
-                {/* Hover gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-amber-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               </Link>
             );
           })}

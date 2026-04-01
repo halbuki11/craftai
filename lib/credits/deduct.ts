@@ -1,53 +1,49 @@
 import { createServiceClient } from '@/lib/supabase/server';
-import type { ModelId } from '@/lib/ai/model-config';
-import type { DeductionResult } from './types';
 import { logger } from '@/lib/logger';
 
-const log = logger.child('credits');
+const log = logger.child('tokens');
+
+export interface DeductionResult {
+  success: boolean;
+  remaining: number;
+  error_message: string | null;
+}
 
 /**
- * Atomically deduct credits after a successful request.
- * Uses PostgreSQL FOR UPDATE to prevent race conditions.
+ * Deduct actual tokens used from user's pool.
+ * All models share the same token pool.
  */
-export async function deductCredits(params: {
+export async function deductTokens(params: {
   userId: string;
-  credits: number;
-  model: ModelId;
-  skillId?: string;
-  actionType?: string;
-  source: 'web' | 'telegram' | 'whatsapp' | 'api';
-  metadata?: Record<string, unknown>;
+  tokens: number;
+  model: string;
+  source: 'web' | 'api';
 }): Promise<DeductionResult> {
   const supabase = await createServiceClient();
 
   const { data, error } = await supabase.rpc('deduct_credits', {
     p_user_id: params.userId,
-    p_credits: params.credits,
+    p_credits: params.tokens,
     p_model: params.model,
-    p_skill_id: params.skillId || null,
-    p_action_type: params.actionType || null,
+    p_skill_id: null,
+    p_action_type: 'chat',
     p_source: params.source,
-    p_metadata: params.metadata || {},
+    p_metadata: { tokens: params.tokens },
   });
 
   if (error) {
-    log.error('Credit deduction RPC error', error as unknown as Error, { userId: params.userId });
+    log.error('Token deduction RPC error', error as unknown as Error, { userId: params.userId });
     return { success: false, remaining: 0, error_message: error.message };
   }
 
-  const result = data?.[0] || { success: false, remaining: 0, error_message: 'Bilinmeyen hata' };
+  const result = data?.[0] || { success: false, remaining: 0, error_message: 'Unknown error' };
 
   if (result.success) {
-    log.info('Credits deducted', {
+    log.info('Tokens deducted', {
       userId: params.userId,
-      credits: params.credits,
+      tokens: params.tokens,
       remaining: result.remaining,
       model: params.model,
-    });
-  } else {
-    log.warn('Credit deduction failed', {
-      userId: params.userId,
-      reason: result.error_message,
     });
   }
 

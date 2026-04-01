@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (!plan?.stripe_price_id) {
-      return NextResponse.json({ error: 'Geçersiz plan' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
     }
 
     const stripe = getStripe();
@@ -58,6 +58,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    return NextResponse.json({ error: 'Ödeme sayfası oluşturulamadı' }, { status: 500 });
+    return NextResponse.json({ error: 'Could not create checkout session' }, { status: 500 });
   }
 }

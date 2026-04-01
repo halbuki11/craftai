@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { BarChart3, Zap, Cpu, Crown, Loader2, Clock, Sparkles } from "lucide-react";
-import { NumberTicker } from "@/components/ui/number-ticker";
-import { BorderBeam } from "@/components/ui/border-beam";
 
 interface UsageEntry {
   id: string;
@@ -23,9 +21,9 @@ interface CreditData {
 }
 
 const MODEL_CONFIG: Record<string, { label: string; icon: typeof Zap; color: string; bg: string }> = {
-  haiku: { label: "Haiku", icon: Zap, color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-100 dark:bg-emerald-900/30" },
-  sonnet: { label: "Sonnet", icon: Cpu, color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-100 dark:bg-amber-900/30" },
-  opus: { label: "Opus", icon: Crown, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-100 dark:bg-purple-900/30" },
+  haiku: { label: "Haiku", icon: Zap, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+  sonnet: { label: "Sonnet", icon: Cpu, color: "text-violet-400", bg: "bg-violet-500/10" },
+  opus: { label: "Opus", icon: Crown, color: "text-indigo-400", bg: "bg-indigo-500/10" },
 };
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -49,7 +47,7 @@ export default function UsagePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        <Loader2 className="w-8 h-8 animate-spin text-white/30" />
       </div>
     );
   }
@@ -70,84 +68,80 @@ export default function UsagePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Kullanım</h1>
-        <p className="text-muted-foreground mt-1">Kredi kullanım detaylarınız</p>
+        <h1 className="text-2xl font-bold text-white/90">Usage</h1>
+        <p className="text-white/50 mt-1">Your credit usage details</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-amber-500/30 transition-colors">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
-              <Zap className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <div className="p-2.5 bg-violet-500/10 rounded-xl">
+              <Zap className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">
-                <NumberTicker value={credits_remaining} />
+              <p className="text-2xl font-bold text-white/90">
+                {credits_remaining}
               </p>
-              <p className="text-sm text-muted-foreground">Kalan Kredi</p>
+              <p className="text-sm text-white/50">Remaining</p>
             </div>
           </div>
-          <BorderBeam colorFrom="#f59e0b" colorTo="#ea580c" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
-        <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-orange-500/30 transition-colors">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-orange-100 dark:bg-orange-900/30 rounded-xl">
-              <BarChart3 className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+            <div className="p-2.5 bg-indigo-500/10 rounded-xl">
+              <BarChart3 className="w-5 h-5 text-indigo-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">
-                <NumberTicker value={usedCredits} />
+              <p className="text-2xl font-bold text-white/90">
+                {usedCredits}
               </p>
-              <p className="text-sm text-muted-foreground">Kullanılan</p>
+              <p className="text-sm text-white/50">Used</p>
             </div>
           </div>
-          <BorderBeam colorFrom="#f97316" colorTo="#dc2626" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
-        <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-emerald-500/30 transition-colors">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
-              <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-2.5 bg-violet-500/10 rounded-xl">
+              <Sparkles className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">
-                <NumberTicker value={usage.length} />
+              <p className="text-2xl font-bold text-white/90">
+                {usage.length}
               </p>
-              <p className="text-sm text-muted-foreground">Toplam İstek</p>
+              <p className="text-sm text-white/50">Total Requests</p>
             </div>
           </div>
-          <BorderBeam colorFrom="#10b981" colorTo="#059669" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
-        <div className="relative bg-card border border-border rounded-2xl p-5 overflow-hidden group hover:border-blue-500/30 transition-colors">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-              <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="p-2.5 bg-indigo-500/10 rounded-xl">
+              <Clock className="w-5 h-5 text-indigo-400" />
             </div>
             <div>
-              <p className="text-sm font-bold text-foreground">
-                {new Date(period_end).toLocaleDateString("tr-TR", { day: "numeric", month: "short" })}
+              <p className="text-sm font-bold text-white/90">
+                {new Date(period_end).toLocaleDateString("en-US", { day: "numeric", month: "short" })}
               </p>
-              <p className="text-sm text-muted-foreground">Dönem Sonu</p>
+              <p className="text-sm text-white/50">Period End</p>
             </div>
           </div>
-          <BorderBeam colorFrom="#3b82f6" colorTo="#6366f1" size={40} duration={12} borderWidth={1.5} className="opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
       </div>
 
       {/* Progress */}
-      <div className="bg-card border border-border rounded-2xl p-5">
+      <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-foreground">Kredi Kullanımı</span>
-          <span className="text-sm font-bold text-amber-600 dark:text-amber-400">
+          <span className="text-sm font-medium text-white/70">Credit Usage</span>
+          <span className="text-sm font-bold text-violet-400">
             {credits_remaining}/{credits_total}
           </span>
         </div>
-        <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+        <div className="w-full h-3 bg-white/[0.05] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full transition-all"
+            className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -155,8 +149,8 @@ export default function UsagePage() {
 
       {/* Model Breakdown */}
       {Object.keys(byModel).length > 0 && (
-        <div className="bg-card border border-border rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-foreground mb-4">Model Dağılımı</h3>
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-white/90 mb-4">Model Breakdown</h3>
           <div className="space-y-3">
             {Object.entries(byModel).map(([model, credits]) => {
               const config = MODEL_CONFIG[model] || MODEL_CONFIG.sonnet;
@@ -168,14 +162,14 @@ export default function UsagePage() {
                   <div className={`p-1.5 rounded-lg ${config.bg}`}>
                     <Icon className={`w-3.5 h-3.5 ${config.color}`} />
                   </div>
-                  <span className="text-xs font-semibold text-foreground w-16">{config.label}</span>
-                  <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                  <span className="text-xs font-semibold text-white/70 w-16">{config.label}</span>
+                  <div className="flex-1 h-2 bg-white/[0.05] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full"
+                      className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
                       style={{ width: `${modelPct}%` }}
                     />
                   </div>
-                  <span className="text-xs font-bold text-muted-foreground w-16 text-right">{credits} kredi</span>
+                  <span className="text-xs font-bold text-white/40 w-20 text-right">{credits} credits</span>
                 </div>
               );
             })}
@@ -185,32 +179,32 @@ export default function UsagePage() {
 
       {/* Usage History */}
       {usage.length > 0 && (
-        <div className="bg-card border border-border rounded-2xl overflow-hidden">
-          <div className="p-5 border-b border-border">
-            <h3 className="text-sm font-bold text-foreground">Son Kullanımlar</h3>
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden">
+          <div className="p-5 border-b border-white/[0.06]">
+            <h3 className="text-sm font-bold text-white/90">Recent Usage</h3>
           </div>
-          <div className="divide-y divide-border">
+          <div className="divide-y divide-white/[0.06]">
             {usage.map((entry) => {
               const config = MODEL_CONFIG[entry.model] || MODEL_CONFIG.sonnet;
               const Icon = config.icon;
 
               return (
-                <div key={entry.id} className="flex items-center gap-3 p-4 hover:bg-accent/30 transition-colors">
+                <div key={entry.id} className="flex items-center gap-3 p-4 hover:bg-white/[0.05] transition-colors">
                   <div className={`p-2 rounded-xl ${config.bg}`}>
                     <Icon className={`w-4 h-4 ${config.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">
-                      {entry.skill_id || entry.action_type || "Genel"}
+                    <p className="text-sm font-medium text-white/90">
+                      {entry.skill_id || entry.action_type || "General"}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/40">
                       {SOURCE_LABELS[entry.source] || entry.source} · {config.label}
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-sm font-bold text-foreground">-{entry.credits_used}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(entry.created_at).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}
+                    <p className="text-sm font-bold text-white/90">-{entry.credits_used}</p>
+                    <p className="text-xs text-white/40">
+                      {new Date(entry.created_at).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                     </p>
                   </div>
                 </div>
