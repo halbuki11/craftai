@@ -22,8 +22,16 @@ tags:
   - ad-copy
   - product-description
 trigger_patterns:
-  - "blog.*yaz"
+  # English
+  - "write.*blog"
+  - "write.*post"
+  - "write.*article"
+  - "create.*content"
+  - "copywriting"
+  - "write.*tweet"
   - "linkedin.*post"
+  # Turkish
+  - "blog.*yaz"
   - "tweet.*yaz"
   - "içerik.*üret"
   - "makale.*yaz"

@@ -20,6 +20,12 @@ tags:
   - presentation
   - text-analysis
 trigger_patterns:
+  # English
+  - "summarize.*pdf"
+  - "summarize.*document"
+  - "analyze.*document"
+  - "document.*summary"
+  # Turkish
   - "pdf.*özet"
   - "pdf.*analiz"
   - "dosya.*incele"

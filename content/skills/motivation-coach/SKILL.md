@@ -22,6 +22,15 @@ tags:
   - coaching
   - planning
 trigger_patterns:
+  # English
+  - "motivation"
+  - "motivate"
+  - "goal.*set"
+  - "habit"
+  - "productivity"
+  - "time.*manage"
+  - "discipline"
+  # Turkish
   - "motivasyon"
   - "motive.*et"
   - "motive.*ol"

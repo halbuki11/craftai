@@ -20,6 +20,13 @@ tags:
   - thank-you
   - professional-communication
 trigger_patterns:
+  # English
+  - "write.*email"
+  - "draft.*email"
+  - "reply.*email"
+  - "follow.*up.*email"
+  - "email.*template"
+  # Turkish
   - "mail.*yaz"
   - "email.*yaz"
   - "e-posta.*yaz"

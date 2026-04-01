@@ -20,6 +20,13 @@ tags:
   - writing-quality
   - multilingual
 trigger_patterns:
+  # English
+  - "fix.*grammar"
+  - "proofread"
+  - "spell.*check"
+  - "correct.*text"
+  - "grammar.*check"
+  # Turkish
   - "düzelt"
   - "gramer"
   - "yazım.*hata"
@@ -34,7 +41,6 @@ trigger_patterns:
   - "Türkçe.*düzelt"
   - "İngilizce.*düzelt"
   - "redaksiyon"
-  - "proofread"
   - "dil.*kontrol"
   - "cümle.*düzelt"
   - "yanlış.*düzelt"

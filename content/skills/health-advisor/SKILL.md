@@ -24,6 +24,15 @@ tags:
   - wellness
   - healthy-living
 trigger_patterns:
+  # English
+  - "health"
+  - "nutrition"
+  - "exercise"
+  - "diet.*plan"
+  - "workout.*plan"
+  - "lose.*weight"
+  - "gain.*muscle"
+  # Turkish
   - "sağlık"
   - "beslenme"
   - "egzersiz"

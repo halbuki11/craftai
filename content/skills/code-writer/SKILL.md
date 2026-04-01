@@ -24,6 +24,7 @@ tags:
   - frontend
   - developer
 trigger_patterns:
+  # English
   - "write.*code"
   - "write.*function"
   - "write.*script"
@@ -36,16 +37,24 @@ trigger_patterns:
   - "refactor"
   - "code review"
   - "how to code"
-  - "python.*script"
-  - "javascript.*function"
-  - "typescript"
   - "create.*api"
   - "build.*app"
   - "sql.*query"
   - "algorithm"
   - "regex"
-  - "frontend"
-  - "backend"
+  # Turkish
+  - "kod.*yaz"
+  - "kod.*oluştur"
+  - "fonksiyon.*yaz"
+  - "script.*yaz"
+  - "program.*yaz"
+  - "hata.*düzelt"
+  - "bug.*düzelt"
+  - "kodla"
+  - "kodunu.*yaz"
+  - "api.*oluştur"
+  - "uygulama.*yap"
+  - "veritabanı.*sor"
 ---
 
 # ROLE

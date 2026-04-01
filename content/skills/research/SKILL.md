@@ -20,8 +20,15 @@ tags:
   - statistics
   - deep-dive
 trigger_patterns:
-  - "araştır"
+  # English
   - "research"
+  - "information.*about"
+  - "analyze"
+  - "compare"
+  - "market.*research"
+  - "report"
+  # Turkish
+  - "araştır"
   - "hakkında.*bilgi"
   - "rapor.*hazırla"
   - "rapor.*yaz"

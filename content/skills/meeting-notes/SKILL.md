@@ -20,6 +20,12 @@ tags:
   - agenda
   - productivity
 trigger_patterns:
+  # English
+  - "meeting.*notes"
+  - "meeting.*summary"
+  - "action.*items"
+  - "minutes"
+  # Turkish
   - "toplantı.*not"
   - "meeting.*not"
   - "toplantı.*özet"

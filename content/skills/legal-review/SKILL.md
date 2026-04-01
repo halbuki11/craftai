@@ -23,6 +23,12 @@ tags:
   - gdpr
   - compliance
 trigger_patterns:
+  # English
+  - "review.*contract"
+  - "analyze.*contract"
+  - "legal.*review"
+  - "contract.*risk"
+  # Turkish
   - "sözleşme.*incele"
   - "sözleşme.*analiz"
   - "kontrat.*analiz"

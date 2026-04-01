@@ -23,10 +23,15 @@ tags:
   - influencer
   - advertising
 trigger_patterns:
+  # English
+  - "social media.*plan"
+  - "social media.*strategy"
+  - "content.*calendar"
+  - "grow.*followers"
+  # Turkish
   - "sosyal medya.*plan"
   - "sosyal medya.*strateji"
   - "içerik.*takvim"
-  - "social media.*plan"
   - "instagram.*strateji"
   - "linkedin.*strateji"
   - "tiktok.*strateji"

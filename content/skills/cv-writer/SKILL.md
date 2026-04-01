@@ -20,13 +20,19 @@ tags:
   - professional-summary
   - ats
 trigger_patterns:
+  # English
+  - "write.*cv"
+  - "write.*resume"
+  - "cover letter"
+  - "job.*application"
+  - "career.*summary"
+  # Turkish
   - "cv.*yaz"
   - "cv.*hazırla"
   - "cv.*oluştur"
   - "özgeçmiş"
   - "resume"
   - "ön yazı"
-  - "cover letter"
   - "iş.*başvuru"
   - "kariyer.*özet"
   - "linkedin.*profil"

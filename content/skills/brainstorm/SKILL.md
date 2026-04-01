@@ -21,9 +21,18 @@ tags:
   - project-idea
   - business-idea
 trigger_patterns:
+  # English
+  - "brainstorm"
+  - "idea"
+  - "suggest"
+  - "creative idea"
+  - "business idea"
+  - "startup idea"
+  - "project idea"
+  - "alternative"
+  # Turkish
   - "fikir.*üret"
   - "fikir.*ver"
-  - "brainstorm"
   - "beyin fırtınası"
   - "öneri.*ver"
   - "alternatif"

@@ -20,6 +20,13 @@ tags:
   - institutional
   - notice
 trigger_patterns:
+  # English
+  - "write.*petition"
+  - "formal.*letter"
+  - "official.*letter"
+  - "complaint.*letter"
+  - "appeal.*letter"
+  # Turkish
   - "dilekçe.*yaz"
   - "başvuru.*yaz"
   - "resmi.*yazı"

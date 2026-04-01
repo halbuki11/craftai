@@ -22,6 +22,15 @@ tags:
   - investment-guide
   - financial-plan
 trigger_patterns:
+  # English
+  - "budget.*plan"
+  - "money.*manage"
+  - "savings"
+  - "income.*expense"
+  - "financial.*plan"
+  - "spending.*analysis"
+  - "debt.*pay"
+  # Turkish
   - "bütçe.*plan"
   - "para.*yönet"
   - "tasarruf"

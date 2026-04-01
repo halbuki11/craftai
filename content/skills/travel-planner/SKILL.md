@@ -22,6 +22,14 @@ tags:
   - honeymoon
   - family-travel
 trigger_patterns:
+  # English
+  - "travel.*plan"
+  - "trip.*plan"
+  - "vacation"
+  - "where.*go"
+  - "hotel.*suggest"
+  - "itinerary"
+  # Turkish
   - "seyahat.*plan"
   - "gezi.*plan"
   - "tatil.*öner"

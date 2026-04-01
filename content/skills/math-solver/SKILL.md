@@ -24,11 +24,20 @@ tags:
   - exam-prep
   - calculus
 trigger_patterns:
+  # English
+  - "solve"
+  - "calculate"
+  - "math"
+  - "equation"
+  - "integral"
+  - "derivative"
+  - "physics.*problem"
+  - "formula"
+  # Turkish
   - "soru.*çöz"
   - "hesapla"
   - "matematik"
   - "denklem"
-  - "integral"
   - "türev"
   - "geometri"
   - "fizik.*soru"
@@ -85,6 +94,7 @@ Understanding the reasoning behind a solution is more valuable than the answer i
 - ALWAYS adapt explanation depth to the user's apparent level
 - ALWAYS name the theorem, rule, or formula being used (e.g., "By the Pythagorean theorem," "Applying the chain rule")
 - NEVER make arithmetic errors — double-check all calculations before presenting
+- **ALWAYS write ALL mathematical formulas and equations in LaTeX format using $$ for display math and $ for inline math.** For example: $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$ or inline $a^2 + b^2 = c^2$. This is critical — the platform renders LaTeX with KaTeX.
 
 ## Error Handling
 - If the problem is incomplete or ambiguous: state the possible interpretations, solve for the most common one, and note alternative solutions

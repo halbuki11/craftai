@@ -23,9 +23,12 @@ tags:
   - korean
   - multilingual
 trigger_patterns:
+  # English
+  - "translate"
+  - "translation"
+  # Turkish
   - "çevir"
   - "tercüme"
-  - "translate"
   - "ingilizce.*yaz"
   - "türkçe.*çevir"
   - "ingilizce.*çevir"

@@ -22,6 +22,13 @@ tags:
   - gluten-free
   - nutrition
 trigger_patterns:
+  # English
+  - "recipe"
+  - "what.*cook"
+  - "meal.*suggest"
+  - "dinner.*idea"
+  - "cooking"
+  # Turkish
   - "yemek.*tarif"
   - "tarif.*öner"
   - "ne pişir"
