@@ -63,11 +63,9 @@ const translations = {
   "sub.tokensMonth": { en: "tokens/mo", tr: "token/ay" },
   "sub.month": { en: "/month", tr: "/ay" },
   "sub.free": { en: "Free", tr: "Ücretsiz" },
-  "sub.whatCanYouDo": { en: "What can you do with 500K tokens?", tr: "500K token ile neler yapabilirsiniz?" },
-  "sub.shortChats": { en: "Short chats", tr: "Kısa sohbetler" },
-  "sub.blogPosts": { en: "Blog posts", tr: "Blog yazıları" },
-  "sub.researchReports": { en: "Research reports", tr: "Araştırma raporları" },
-  "sub.deepAnalysis": { en: "Deep analysis", tr: "Derin analiz" },
+  "sub.allModels": { en: "All models", tr: "Tüm modeller" },
+  "sub.includingOpus": { en: "Including Claude Opus 4.6", tr: "Claude Opus 4.6 dahil" },
+  "sub.prioritySupport": { en: "Priority support", tr: "Öncelikli destek" },
 
   // Usage
   "usage.title": { en: "Usage", tr: "Kullanım" },

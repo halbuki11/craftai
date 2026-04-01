@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Check, CreditCard, Loader2, Sparkles, Zap, Crown, ArrowRight } from "lucide-react";
+import { Check, CreditCard, Loader2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Plan {
   id: string;
@@ -10,8 +11,8 @@ interface Plan {
   tokens: string;
   tokensNum: number;
   price: number;
-  models: string[];
-  highlight?: string;
+  modelKeys: string[];
+  highlightKey?: string;
   popular?: boolean;
 }
 
@@ -22,8 +23,8 @@ const PLANS: Plan[] = [
     tokens: "15K",
     tokensNum: 15000,
     price: 0,
-    models: ["Claude 4.5 Haiku"],
-    highlight: "Try it out",
+    modelKeys: ["Claude 4.5 Haiku"],
+    highlightKey: "sub.tryIt",
   },
   {
     id: "starter",
@@ -31,8 +32,8 @@ const PLANS: Plan[] = [
     tokens: "500K",
     tokensNum: 500000,
     price: 9,
-    models: ["Claude 4.5 Haiku", "Claude Sonnet 4.6"],
-    highlight: "Most popular",
+    modelKeys: ["Claude 4.5 Haiku", "Claude Sonnet 4.6"],
+    highlightKey: "sub.popular",
     popular: true,
   },
   {
@@ -41,7 +42,7 @@ const PLANS: Plan[] = [
     tokens: "2M",
     tokensNum: 2000000,
     price: 29,
-    models: ["All models", "Including Claude Opus 4.6"],
+    modelKeys: ["sub.allModels", "sub.includingOpus"],
   },
   {
     id: "business",
@@ -49,7 +50,7 @@ const PLANS: Plan[] = [
     tokens: "10M",
     tokensNum: 10000000,
     price: 99,
-    models: ["All models", "Priority support"],
+    modelKeys: ["sub.allModels", "sub.prioritySupport"],
   },
 ];
 
@@ -60,6 +61,7 @@ function formatTokens(n: number): string {
 }
 
 export default function SubscriptionPage() {
+  const { t } = useI18n();
   const [currentPlan, setCurrentPlan] = useState<string>("free");
   const [tokensUsed, setTokensUsed] = useState(0);
   const [tokensTotal, setTokensTotal] = useState(100000);
@@ -93,10 +95,10 @@ export default function SubscriptionPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        toast.error(data.error || "Could not create checkout session");
+        toast.error(data.error || t("common.error"));
       }
     } catch {
-      toast.error("Something went wrong");
+      toast.error(t("common.error"));
     } finally {
       setUpgrading(null);
     }
@@ -108,7 +110,7 @@ export default function SubscriptionPage() {
       const data = await res.json();
       if (data.url) window.location.href = data.url;
     } catch {
-      toast.error("Could not open portal");
+      toast.error(t("common.error"));
     }
   }
 
@@ -122,22 +124,32 @@ export default function SubscriptionPage() {
 
   const usagePercent = tokensTotal > 0 ? Math.min(100, (tokensUsed / tokensTotal) * 100) : 0;
 
+  // Helper to resolve model display text
+  const resolveLabel = (key: string) => {
+    const map: Record<string, string> = {
+      "sub.allModels": t("sub.allModels"),
+      "sub.includingOpus": t("sub.includingOpus"),
+      "sub.prioritySupport": t("sub.prioritySupport"),
+    };
+    return map[key] || key;
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-2xl font-semibold text-white">Plans</h1>
+        <h1 className="text-2xl font-semibold text-white">{t("sub.plans")}</h1>
         <p className="text-sm text-white/40 mt-1">
-          All models share the same token pool
+          {t("sub.tokenPool")}
         </p>
       </div>
 
       {/* Current Usage */}
       <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-white/70">Token Usage</span>
+          <span className="text-sm font-medium text-white/70">{t("sub.tokenUsage")}</span>
           <span className="text-xs text-white/40">
-            {formatTokens(tokensUsed)} / {formatTokens(tokensTotal)} used
+            {formatTokens(tokensUsed)} / {formatTokens(tokensTotal)} {t("sub.used")}
           </span>
         </div>
         <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
@@ -147,7 +159,7 @@ export default function SubscriptionPage() {
           />
         </div>
         <p className="text-[11px] text-white/25 mt-2">
-          {formatTokens(Math.max(0, tokensTotal - tokensUsed))} tokens remaining this period
+          {formatTokens(Math.max(0, tokensTotal - tokensUsed))} {t("sub.remaining")}
         </p>
       </div>
 
@@ -158,7 +170,7 @@ export default function SubscriptionPage() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors"
           >
             <CreditCard className="w-4 h-4" />
-            Manage Subscription
+            {t("sub.manage")}
           </button>
         </div>
       )}
@@ -182,7 +194,7 @@ export default function SubscriptionPage() {
               {plan.popular && (
                 <div className="absolute top-3 right-3">
                   <span className="text-[9px] font-bold text-violet-300 bg-violet-500/15 px-2 py-0.5 rounded-full">
-                    Popular
+                    {t("sub.popular")}
                   </span>
                 </div>
               )}
@@ -191,31 +203,31 @@ export default function SubscriptionPage() {
                 {/* Name */}
                 <div>
                   <span className="text-sm font-semibold text-white">{plan.name}</span>
-                  {plan.highlight && !plan.popular && (
-                    <span className="text-[10px] text-white/30 ml-2">{plan.highlight}</span>
+                  {plan.highlightKey && !plan.popular && (
+                    <span className="text-[10px] text-white/30 ml-2">{t(plan.highlightKey as any)}</span>
                   )}
                 </div>
 
                 {/* Tokens */}
                 <div>
                   <span className="text-3xl font-bold text-white">{plan.tokens}</span>
-                  <span className="text-xs text-white/30 ml-1">tokens/mo</span>
+                  <span className="text-xs text-white/30 ml-1">{t("sub.tokensMonth")}</span>
                 </div>
 
                 {/* Price */}
                 <div>
                   <span className="text-lg font-semibold text-white">
-                    {plan.price === 0 ? "Free" : `$${plan.price}`}
+                    {plan.price === 0 ? t("sub.free") : `$${plan.price}`}
                   </span>
-                  {plan.price > 0 && <span className="text-xs text-white/30">/month</span>}
+                  {plan.price > 0 && <span className="text-xs text-white/30">{t("sub.month")}</span>}
                 </div>
 
                 {/* Models */}
                 <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-                  {plan.models.map((m) => (
+                  {plan.modelKeys.map((m) => (
                     <div key={m} className="flex items-center gap-2 text-xs text-white/60">
                       <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                      {m}
+                      {resolveLabel(m)}
                     </div>
                   ))}
                 </div>
@@ -225,7 +237,7 @@ export default function SubscriptionPage() {
                   {isCurrent ? (
                     <div className="flex items-center justify-center gap-1.5 py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs font-medium text-emerald-400">
                       <Check className="w-3.5 h-3.5" />
-                      Current Plan
+                      {t("sub.currentPlan")}
                     </div>
                   ) : (
                     <button
@@ -241,7 +253,7 @@ export default function SubscriptionPage() {
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
                       ) : (
                         <>
-                          {plan.id === "free" ? "Current" : "Upgrade"}
+                          {plan.id === "free" ? t("sub.current") : t("sub.upgrade")}
                           {plan.id !== "free" && <ArrowRight className="w-3 h-3" />}
                         </>
                       )}
@@ -253,7 +265,6 @@ export default function SubscriptionPage() {
           );
         })}
       </div>
-
     </div>
   );
 }
