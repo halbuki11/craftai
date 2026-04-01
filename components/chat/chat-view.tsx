@@ -16,8 +16,6 @@ import {
   FileText,
   ImageIcon,
   Download,
-  Mic,
-  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ChatMessage } from "./chat-message";
@@ -87,9 +85,6 @@ export function ChatView() {
   const [currentNoteId, setCurrentNoteId] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [allowedModels, setAllowedModels] = useState<string[]>([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isTranscribing, setIsTranscribing] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const { t } = useI18n();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const streamBufferRef = useRef("");
@@ -342,54 +337,6 @@ export function ChatView() {
   const removeAttachment = useCallback((index: number) => {
     setAttachments((prev) => prev.filter((_, i) => i !== index));
   }, []);
-
-  const toggleRecording = useCallback(async () => {
-    if (isRecording) {
-      // Stop recording
-      mediaRecorderRef.current?.stop();
-      setIsRecording(false);
-      return;
-    }
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
-      const chunks: Blob[] = [];
-
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunks.push(e.data);
-      };
-
-      mediaRecorder.onstop = async () => {
-        stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunks, { type: "audio/webm" });
-
-        setIsTranscribing(true);
-        try {
-          const formData = new FormData();
-          formData.append("audio", blob, "recording.webm");
-          const res = await fetch("/api/ai/transcribe", { method: "POST", body: formData });
-          const data = await res.json();
-          if (data.text) {
-            setValue((prev) => (prev ? prev + " " + data.text : data.text));
-            textareaRef.current?.focus();
-          } else if (data.error) {
-            toast.error(data.error);
-          }
-        } catch {
-          toast.error("Transcription failed");
-        } finally {
-          setIsTranscribing(false);
-        }
-      };
-
-      mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch {
-      toast.error("Microphone access denied");
-    }
-  }, [isRecording, textareaRef]);
 
   const selectCommand = useCallback(
     (skill: SkillItem) => {
@@ -982,26 +929,6 @@ export function ChatView() {
                       <Paperclip className="w-4 h-4 transition-colors" />
                     </label>
 
-                    {/* Microphone */}
-                    <button
-                      type="button"
-                      onClick={toggleRecording}
-                      disabled={isTranscribing}
-                      className={`rounded-lg p-2 transition-colors ${
-                        isRecording
-                          ? "text-red-400 bg-red-400/10 animate-pulse"
-                          : isTranscribing
-                          ? "text-white/20"
-                          : "text-white/30 hover:text-white/70 hover:bg-white/[0.05]"
-                      }`}
-                      title={isRecording ? "Stop recording" : "Voice message"}
-                    >
-                      {isTranscribing ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <Mic className="w-4 h-4" />
-                      )}
-                    </button>
                   </div>
 
                 {/* Send / Stop */}
