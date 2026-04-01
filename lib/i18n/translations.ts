@@ -86,6 +86,9 @@ const translations = {
   "usage.recentUsage": { en: "Recent Usage", tr: "Son Kullanım" },
   "usage.credits": { en: "credits", tr: "kredi" },
   "usage.general": { en: "General", tr: "Genel" },
+  "usage.dailyUsage": { en: "Daily Usage (Last 7 Days)", tr: "Günlük Kullanım (Son 7 Gün)" },
+  "usage.avgPerDay": { en: "Avg/day", tr: "Ort/gün" },
+  "usage.peakDay": { en: "Peak day", tr: "En yoğun gün" },
 
   // Settings
   "settings.title": { en: "Settings", tr: "Ayarlar" },

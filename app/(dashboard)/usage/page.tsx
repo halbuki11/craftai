@@ -173,6 +173,53 @@ export default function UsagePage() {
         </div>
       )}
 
+      {/* Daily Usage Chart */}
+      {usage.length > 0 && (() => {
+        // Group usage by day for last 7 days
+        const days: Record<string, number> = {};
+        const now = new Date();
+        for (let d = 6; d >= 0; d--) {
+          const date = new Date(now);
+          date.setDate(date.getDate() - d);
+          days[date.toISOString().slice(0, 10)] = 0;
+        }
+        for (const entry of usage) {
+          const day = entry.created_at.slice(0, 10);
+          if (days[day] !== undefined) days[day] += entry.credits_used;
+        }
+        const dayEntries = Object.entries(days);
+        const maxDay = Math.max(...Object.values(days), 1);
+        const avgPerDay = Math.round(Object.values(days).reduce((a, b) => a + b, 0) / 7);
+        const peakDayKey = dayEntries.reduce((a, b) => (b[1] > a[1] ? b : a), dayEntries[0]);
+
+        return (
+          <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-bold text-white/90">{t("usage.dailyUsage")}</h3>
+              <div className="flex gap-4 text-xs text-white/40">
+                <span>{t("usage.avgPerDay")}: <span className="text-white/70 font-semibold">{avgPerDay}</span></span>
+                <span>{t("usage.peakDay")}: <span className="text-white/70 font-semibold">{new Date(peakDayKey[0]).toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", { weekday: "short" })}</span></span>
+              </div>
+            </div>
+            <div className="flex items-end gap-2 h-32">
+              {dayEntries.map(([day, val]) => (
+                <div key={day} className="flex-1 flex flex-col items-center gap-1">
+                  <div className="w-full flex-1 flex items-end">
+                    <div
+                      className="w-full bg-gradient-to-t from-violet-500 to-indigo-500 rounded-t-md transition-all duration-500 min-h-[2px]"
+                      style={{ height: `${(val / maxDay) * 100}%` }}
+                    />
+                  </div>
+                  <span className="text-[10px] text-white/30">
+                    {new Date(day).toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", { weekday: "narrow" })}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Usage History */}
       {usage.length > 0 && (
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden">
