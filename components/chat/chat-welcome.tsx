@@ -39,10 +39,10 @@ interface Skill {
 }
 
 const SUGGESTIONS = [
-  { label: "Write a Python web scraper", icon: <Code className="w-4 h-4" /> },
-  { label: "Draft a professional email", icon: <Mail className="w-4 h-4" /> },
-  { label: "Research top tech trends 2026", icon: <Search className="w-4 h-4" /> },
-  { label: "Brainstorm startup ideas", icon: <Lightbulb className="w-4 h-4" /> },
+  { key: "sug.scraper" as const, icon: <Code className="w-4 h-4" /> },
+  { key: "sug.email" as const, icon: <Mail className="w-4 h-4" /> },
+  { key: "sug.research" as const, icon: <Search className="w-4 h-4" /> },
+  { key: "sug.startup" as const, icon: <Lightbulb className="w-4 h-4" /> },
 ];
 
 interface ChatWelcomeProps {
@@ -99,23 +99,26 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
 
           {/* Suggestion cards */}
           <div className="grid grid-cols-2 gap-3 mt-8">
-            {SUGGESTIONS.map((item, index) => (
-              <motion.button
-                key={item.label}
-                onClick={() => onSuggestionClick(item.label)}
-                className="flex items-start gap-3 p-4 bg-[#1e1f20] hover:bg-white/[0.08] rounded-2xl text-left transition-all group"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.05 }}
-              >
-                <span className="text-white/40 group-hover:text-blue-400 transition-colors mt-0.5 flex-shrink-0">
-                  {item.icon}
-                </span>
-                <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors leading-snug">
-                  {item.label}
-                </span>
-              </motion.button>
-            ))}
+            {SUGGESTIONS.map((item, index) => {
+              const label = t(item.key);
+              return (
+                <motion.button
+                  key={item.key}
+                  onClick={() => onSuggestionClick(label)}
+                  className="flex items-start gap-3 p-4 bg-[#1e1f20] hover:bg-white/[0.08] rounded-2xl text-left transition-all group"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05 }}
+                >
+                  <span className="text-white/40 group-hover:text-blue-400 transition-colors mt-0.5 flex-shrink-0">
+                    {item.icon}
+                  </span>
+                  <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors leading-snug">
+                    {label}
+                  </span>
+                </motion.button>
+              );
+            })}
           </div>
 
           {/* Skills */}

@@ -84,6 +84,12 @@ const translations = {
   "settings.language": { en: "Language", tr: "Dil" },
   "settings.save": { en: "Save", tr: "Kaydet" },
 
+  // Suggestions
+  "sug.scraper": { en: "Write a Python web scraper", tr: "Python web scraper yaz" },
+  "sug.email": { en: "Draft a professional email", tr: "Profesyonel bir e-posta yaz" },
+  "sug.research": { en: "Research top tech trends 2026", tr: "2026 teknoloji trendlerini araştır" },
+  "sug.startup": { en: "Brainstorm startup ideas", tr: "Startup fikirleri üret" },
+
   // Common
   "common.delete": { en: "Delete", tr: "Sil" },
   "common.cancel": { en: "Cancel", tr: "İptal" },
