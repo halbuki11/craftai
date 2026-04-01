@@ -254,26 +254,6 @@ export default function SubscriptionPage() {
         })}
       </div>
 
-      {/* Cost comparison */}
-      <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-        <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">
-          What can you do with 500K tokens?
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          {[
-            { label: "Short chats", value: "~250", sub: "with Haiku" },
-            { label: "Blog posts", value: "~100", sub: "with Sonnet" },
-            { label: "Research reports", value: "~50", sub: "with Sonnet" },
-            { label: "Deep analysis", value: "~15", sub: "with Opus" },
-          ].map((item) => (
-            <div key={item.label} className="p-3 bg-white/[0.02] rounded-xl">
-              <p className="text-lg font-bold text-white">{item.value}</p>
-              <p className="text-[11px] text-white/50">{item.label}</p>
-              <p className="text-[10px] text-white/25">{item.sub}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
