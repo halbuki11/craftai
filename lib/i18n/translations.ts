@@ -133,6 +133,7 @@ const translations = {
   "skill.social-media": { en: "Social Media", tr: "Sosyal Medya" },
   "skill.translator": { en: "Translator", tr: "Çevirmen" },
   "skill.travel-planner": { en: "Travel Planner", tr: "Seyahat Planlayıcı" },
+  "skill.code-writer": { en: "Code Writer", tr: "Kod Yazarı" },
 
   // Common
   "chat.exportPdf": { en: "Export as PDF", tr: "PDF olarak indir" },
