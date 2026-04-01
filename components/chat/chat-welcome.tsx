@@ -56,7 +56,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
   useEffect(() => {
     fetch("/api/skills")
       .then((r) => r.json())
-      .then((data) => setSkills((data.skills || []).slice(0, 8)))
+      .then((data) => setSkills(data.skills || []))
       .catch(() => {});
   }, []);
 
