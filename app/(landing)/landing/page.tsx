@@ -22,7 +22,7 @@ const SKILLS_PREVIEW = [
   { name: "Code Writer", icon: Code, color: "text-emerald-400" },
   { name: "Research", icon: Search, color: "text-blue-400" },
   { name: "Email Assistant", icon: Mail, color: "text-amber-400" },
-  { name: "Translator", icon: Globe, color: "text-violet-400" },
+  { name: "Translator", icon: Globe, color: "text-teal-400" },
   { name: "Math Solver", icon: Brain, color: "text-cyan-400" },
 ];
 
@@ -83,7 +83,7 @@ export default function LandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[var(--background)]/80 border-b border-white/[0.06]">
         <div className="flex items-center justify-between px-6 py-3 max-w-6xl mx-auto">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="text-base font-semibold">CraftAI</span>
@@ -102,7 +102,7 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-violet-500/10 border border-violet-500/20 rounded-full text-xs text-violet-300 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-500/10 border border-teal-500/20 rounded-full text-xs text-teal-300 mb-8">
             <Sparkles className="w-3 h-3" />
             Claude + GPT-4o — one subscription
           </div>
@@ -110,7 +110,7 @@ export default function LandingPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
             Stop paying for
             <br />
-            <span className="bg-gradient-to-r from-violet-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 via-sky-400 to-teal-400 bg-clip-text text-transparent">
               two AI subscriptions
             </span>
           </h1>
@@ -181,8 +181,8 @@ export default function LandingPage() {
                 key={f.title}
                 className="p-6 sm:p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl hover:border-white/[0.12] transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center mb-5 group-hover:bg-violet-500/20 transition-colors">
-                  <f.icon className="w-6 h-6 text-violet-400" />
+                <div className="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center mb-5 group-hover:bg-teal-500/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-teal-400" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-white/40 leading-relaxed">{f.desc}</p>
@@ -202,7 +202,7 @@ export default function LandingPage() {
           <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden">
             <div className="grid grid-cols-4 gap-0 p-4 border-b border-white/[0.06] text-sm font-semibold">
               <div></div>
-              <div className="text-center text-violet-400">CraftAI</div>
+              <div className="text-center text-teal-400">CraftAI</div>
               <div className="text-center text-white/40">ChatGPT</div>
               <div className="text-center text-white/40">Claude</div>
             </div>
@@ -211,7 +211,7 @@ export default function LandingPage() {
                 <div className="text-white/60">{row.feature}</div>
                 {row.usText ? (
                   <>
-                    <div className="text-center font-bold text-violet-400">{row.usText}</div>
+                    <div className="text-center font-bold text-teal-400">{row.usText}</div>
                     <div className="text-center text-white/30">{row.chatgptText}</div>
                     <div className="text-center text-white/30">{row.claudeText}</div>
                   </>
@@ -256,11 +256,11 @@ export default function LandingPage() {
             </div>
 
             {/* Pro */}
-            <div className="p-8 bg-violet-500/5 border border-violet-500/20 rounded-2xl text-left relative overflow-hidden">
-              <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-violet-500/20 rounded-full text-[10px] font-bold text-violet-300">
+            <div className="p-8 bg-teal-500/5 border border-teal-500/20 rounded-2xl text-left relative overflow-hidden">
+              <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-teal-500/20 rounded-full text-[10px] font-bold text-teal-300">
                 POPULAR
               </div>
-              <p className="text-sm font-semibold text-violet-400">Pro</p>
+              <p className="text-sm font-semibold text-teal-400">Pro</p>
               <p className="text-4xl font-bold mt-2">$19<span className="text-lg font-normal text-white/30">/mo</span></p>
               <p className="text-xs text-white/30 mt-1">2M tokens/month</p>
               <ul className="mt-6 space-y-3">
@@ -315,7 +315,7 @@ export default function LandingPage() {
       <footer className="border-t border-white/[0.06] px-6 py-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
               <Sparkles className="w-3 h-3 text-white" />
             </div>
             <span className="text-sm text-white/40">CraftAI</span>

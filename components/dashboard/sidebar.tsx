@@ -167,7 +167,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
         {/* Header */}
         <div className="flex h-14 items-center justify-between px-4 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gemini-gradient shadow-md">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-craft-gradient shadow-md">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="text-[15px] font-medium text-white/90 font-sans tracking-wide">CraftAI</span>
@@ -279,7 +279,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
               </div>
               <div className="w-full h-1.5 bg-[#1e1f20] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gemini-gradient rounded-full transition-all duration-500"
+                  className="h-full bg-craft-gradient rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, (tokensRemaining / tokensTotal) * 100)}%` }}
                 />
               </div>

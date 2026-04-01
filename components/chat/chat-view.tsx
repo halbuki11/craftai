@@ -569,11 +569,11 @@ export function ChatView() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 bg-violet-500/10 backdrop-blur-sm border-2 border-dashed border-violet-500/30 rounded-2xl flex items-center justify-center"
+            className="absolute inset-0 z-50 bg-teal-500/10 backdrop-blur-sm border-2 border-dashed border-teal-500/30 rounded-2xl flex items-center justify-center"
           >
             <div className="text-center">
-              <ImageIcon className="w-10 h-10 text-violet-400 mx-auto mb-2" />
-              <p className="text-sm text-violet-300 font-medium">Drop files here</p>
+              <ImageIcon className="w-10 h-10 text-teal-400 mx-auto mb-2" />
+              <p className="text-sm text-teal-300 font-medium">Drop files here</p>
             </div>
           </motion.div>
         )}

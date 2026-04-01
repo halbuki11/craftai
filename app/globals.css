@@ -85,39 +85,39 @@
   to {
     transform: translateY(calc(-100% - var(--gap)));}}}
 
-/* Forced Dark Theme */
+/* CraftAI — Cool & Minimal Theme */
 :root {
-  --background: #131314;
-  --foreground: #e3e3e3;
-  --card: #1e1f20;
-  --card-foreground: #e3e3e3;
-  --popover: #1e1f20;
-  --popover-foreground: #e3e3e3;
-  --primary: #a8c7fa;
-  --primary-foreground: #041e49;
-  --secondary: #1e1f20;
-  --secondary-foreground: #e3e3e3;
-  --muted: #1e1f20;
-  --muted-foreground: #c4c7c5;
-  --accent: #282a2c;
-  --accent-foreground: #e3e3e3;
-  --destructive: #f28b82;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #a8c7fa;
-  --chart-1: #4285f4;
-  --chart-2: #ea4335;
-  --chart-3: #fbbc05;
-  --chart-4: #34a853;
-  --chart-5: #0b57d0;
-  --sidebar: #131314;
-  --sidebar-foreground: #e3e3e3;
-  --sidebar-primary: #a8c7fa;
-  --sidebar-primary-foreground: #041e49;
-  --sidebar-accent: #1e1f20;
-  --sidebar-accent-foreground: #e3e3e3;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #a8c7fa;
+  --background: #0c0d0e;
+  --foreground: #e4e4e7;
+  --card: #141517;
+  --card-foreground: #e4e4e7;
+  --popover: #141517;
+  --popover-foreground: #e4e4e7;
+  --primary: #5eead4;
+  --primary-foreground: #042f2e;
+  --secondary: #1a1b1e;
+  --secondary-foreground: #e4e4e7;
+  --muted: #1a1b1e;
+  --muted-foreground: #9ca3af;
+  --accent: #1e2023;
+  --accent-foreground: #e4e4e7;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.07);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #5eead4;
+  --chart-1: #5eead4;
+  --chart-2: #38bdf8;
+  --chart-3: #818cf8;
+  --chart-4: #34d399;
+  --chart-5: #22d3ee;
+  --sidebar: #0a0b0c;
+  --sidebar-foreground: #e4e4e7;
+  --sidebar-primary: #5eead4;
+  --sidebar-primary-foreground: #042f2e;
+  --sidebar-accent: #141517;
+  --sidebar-accent-foreground: #e4e4e7;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #5eead4;
 }
 
 @layer base {
@@ -139,21 +139,19 @@
 }
 
 @layer utilities {
-  .text-gemini-gradient {
-    background: linear-gradient(74deg, #4285f4 0, #9b72cb 9%, #d96570 20%, #d96570 24%, #9b72cb 35%, #4285f4 44%, #9b72cb 50%, #d96570 56%, #131314 75%, #131314 100%);
-    background-size: 400% 100%;
+  .text-craft-gradient {
+    background: linear-gradient(135deg, #5eead4 0%, #38bdf8 50%, #818cf8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
 
-  .bg-gemini-gradient {
-    background: linear-gradient(74deg, #4285f4 0, #9b72cb 20%, #d96570 40%, #fbbc05 60%, #34a853 80%, #4285f4 100%);
-    background-size: 200% 100%;
+  .bg-craft-gradient {
+    background: linear-gradient(135deg, #5eead4 0%, #38bdf8 50%, #818cf8 100%);
   }
 
-  .shadow-gemini {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 0 2px rgba(255,255,255,0.08);
+  .shadow-craft {
+    box-shadow: 0 0 20px rgba(94, 234, 212, 0.1), 0 0 40px rgba(56, 189, 248, 0.05);
   }
 }
 

@@ -54,7 +54,7 @@ export default function SettingsPage() {
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
           <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl">
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -67,8 +67,8 @@ export default function SettingsPage() {
           <div className="p-5 space-y-1">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-white/[0.06]">
               <div className="flex items-center gap-3 text-white/50">
-                <div className="p-1.5 bg-violet-500/10 rounded-lg">
-                  <Mail className="w-4 h-4 text-violet-400" />
+                <div className="p-1.5 bg-teal-500/10 rounded-lg">
+                  <Mail className="w-4 h-4 text-teal-400" />
                 </div>
                 <span className="text-sm font-medium">{t("settings.email")}</span>
               </div>
@@ -77,8 +77,8 @@ export default function SettingsPage() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-white/[0.06]">
               <div className="flex items-center gap-3 text-white/50">
-                <div className="p-1.5 bg-violet-500/10 rounded-lg">
-                  <Calendar className="w-4 h-4 text-violet-400" />
+                <div className="p-1.5 bg-teal-500/10 rounded-lg">
+                  <Calendar className="w-4 h-4 text-teal-400" />
                 </div>
                 <span className="text-sm font-medium">{t("settings.joined")}</span>
               </div>
@@ -106,7 +106,7 @@ export default function SettingsPage() {
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
           <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl">
                 <Globe className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function SettingsPage() {
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.1] transition-colors">
           <div className="p-5 border-b border-white/[0.06]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
+              <div className="p-2.5 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl">
                 <Cpu className="w-5 h-5 text-white" />
               </div>
               <div>

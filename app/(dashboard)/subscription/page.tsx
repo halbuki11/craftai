@@ -138,7 +138,7 @@ export default function SubscriptionPage() {
         </div>
         <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-500"
+            className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-500"
             style={{ width: `${usagePercent}%` }}
           />
         </div>
@@ -169,7 +169,7 @@ export default function SubscriptionPage() {
               key={plan.id}
               className={`relative bg-white/[0.02] border rounded-2xl overflow-hidden transition-all ${
                 plan.popular
-                  ? "border-violet-500/30 shadow-lg shadow-violet-500/5"
+                  ? "border-teal-500/30 shadow-lg shadow-teal-500/5"
                   : isCurrent
                   ? "border-emerald-500/30"
                   : "border-white/[0.06] hover:border-white/[0.12]"
@@ -177,7 +177,7 @@ export default function SubscriptionPage() {
             >
               {plan.popular && (
                 <div className="absolute top-3 right-3">
-                  <span className="text-[9px] font-bold text-violet-300 bg-violet-500/15 px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] font-bold text-teal-300 bg-teal-500/15 px-2 py-0.5 rounded-full">
                     {t("sub.popular")}
                   </span>
                 </div>

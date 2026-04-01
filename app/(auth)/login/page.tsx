@@ -49,7 +49,7 @@ export default function LoginPage() {
   return (
     <div className="space-y-6 sm:space-y-8">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-xl shadow-violet-500/20 mb-5">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 shadow-xl shadow-teal-500/20 mb-5">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
         <h1 className="text-2xl font-semibold text-white tracking-tight">
@@ -91,7 +91,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-all"
             />
           </div>
         </div>
@@ -106,13 +106,13 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-all"
             />
           </div>
         </div>
 
         <div className="flex justify-end">
-          <Link href="/forgot-password" className="text-xs text-white/30 hover:text-violet-400 transition-colors">
+          <Link href="/forgot-password" className="text-xs text-white/30 hover:text-teal-400 transition-colors">
             {t("auth.forgotPassword")}
           </Link>
         </div>
@@ -136,7 +136,7 @@ export default function LoginPage() {
       <div className="text-center space-y-3">
         <p className="text-sm text-white/30">
           {t("auth.noAccount")}{" "}
-          <Link href="/signup" className="text-violet-400 hover:text-violet-300 font-medium transition-colors">
+          <Link href="/signup" className="text-teal-400 hover:text-teal-300 font-medium transition-colors">
             {t("auth.signUpLink")}
           </Link>
         </p>

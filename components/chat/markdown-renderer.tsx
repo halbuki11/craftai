@@ -92,7 +92,7 @@ function renderInlineMarkdown(text: string): React.ReactNode[] {
       );
     } else if (match[7]) {
       parts.push(
-        <a key={match.index} href={match[9]} target="_blank" rel="noopener noreferrer" className="text-violet-400 underline underline-offset-2 hover:text-violet-300">
+        <a key={match.index} href={match[9]} target="_blank" rel="noopener noreferrer" className="text-teal-400 underline underline-offset-2 hover:text-teal-300">
           {match[8]}
         </a>
       );

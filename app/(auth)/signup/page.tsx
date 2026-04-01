@@ -52,7 +52,7 @@ export default function SignupPage() {
   return (
     <div className="space-y-6 sm:space-y-8">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-xl shadow-violet-500/20 mb-5">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 shadow-xl shadow-teal-500/20 mb-5">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
         <h1 className="text-2xl font-semibold text-white tracking-tight">
@@ -93,7 +93,7 @@ export default function SignupPage() {
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
               required
-              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-all"
             />
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-all"
             />
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function SignupPage() {
               placeholder="Min 6 characters"
               required
               minLength={6}
-              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-all"
             />
           </div>
         </div>
@@ -148,7 +148,7 @@ export default function SignupPage() {
       <div className="text-center space-y-3">
         <p className="text-sm text-white/30">
           {t("auth.haveAccount")}{" "}
-          <Link href="/login" className="text-violet-400 hover:text-violet-300 font-medium transition-colors">
+          <Link href="/login" className="text-teal-400 hover:text-teal-300 font-medium transition-colors">
             {t("auth.signInLink")}
           </Link>
         </p>

@@ -23,8 +23,8 @@ interface CreditData {
 
 const MODEL_CONFIG: Record<string, { label: string; icon: typeof Zap; color: string; bg: string }> = {
   haiku: { label: "Haiku", icon: Zap, color: "text-emerald-400", bg: "bg-emerald-500/10" },
-  sonnet: { label: "Sonnet", icon: Cpu, color: "text-violet-400", bg: "bg-violet-500/10" },
-  opus: { label: "Opus", icon: Crown, color: "text-indigo-400", bg: "bg-indigo-500/10" },
+  sonnet: { label: "Sonnet", icon: Cpu, color: "text-teal-400", bg: "bg-teal-500/10" },
+  opus: { label: "Opus", icon: Crown, color: "text-sky-400", bg: "bg-cyan-500/10" },
 };
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -78,8 +78,8 @@ export default function UsagePage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-violet-500/10 rounded-xl">
-              <Zap className="w-5 h-5 text-violet-400" />
+            <div className="p-2.5 bg-teal-500/10 rounded-xl">
+              <Zap className="w-5 h-5 text-teal-400" />
             </div>
             <div>
               <p className="text-2xl font-bold text-white/90">{credits_remaining}</p>
@@ -90,8 +90,8 @@ export default function UsagePage() {
 
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-indigo-500/10 rounded-xl">
-              <BarChart3 className="w-5 h-5 text-indigo-400" />
+            <div className="p-2.5 bg-cyan-500/10 rounded-xl">
+              <BarChart3 className="w-5 h-5 text-sky-400" />
             </div>
             <div>
               <p className="text-2xl font-bold text-white/90">{usedCredits}</p>
@@ -102,8 +102,8 @@ export default function UsagePage() {
 
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-violet-500/10 rounded-xl">
-              <Sparkles className="w-5 h-5 text-violet-400" />
+            <div className="p-2.5 bg-teal-500/10 rounded-xl">
+              <Sparkles className="w-5 h-5 text-teal-400" />
             </div>
             <div>
               <p className="text-2xl font-bold text-white/90">{usage.length}</p>
@@ -114,8 +114,8 @@ export default function UsagePage() {
 
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-indigo-500/10 rounded-xl">
-              <Clock className="w-5 h-5 text-indigo-400" />
+            <div className="p-2.5 bg-cyan-500/10 rounded-xl">
+              <Clock className="w-5 h-5 text-sky-400" />
             </div>
             <div>
               <p className="text-sm font-bold text-white/90">
@@ -131,13 +131,13 @@ export default function UsagePage() {
       <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium text-white/70">{t("usage.creditUsage")}</span>
-          <span className="text-sm font-bold text-violet-400">
+          <span className="text-sm font-bold text-teal-400">
             {credits_remaining}/{credits_total}
           </span>
         </div>
         <div className="w-full h-3 bg-white/[0.05] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all"
+            className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -161,7 +161,7 @@ export default function UsagePage() {
                   <span className="text-xs font-semibold text-white/70 w-14 sm:w-16">{config.label}</span>
                   <div className="flex-1 h-2 bg-white/[0.05] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"
                       style={{ width: `${modelPct}%` }}
                     />
                   </div>
@@ -206,7 +206,7 @@ export default function UsagePage() {
                 <div key={day} className="flex-1 flex flex-col items-center gap-1">
                   <div className="w-full flex-1 flex items-end">
                     <div
-                      className="w-full bg-gradient-to-t from-violet-500 to-indigo-500 rounded-t-md transition-all duration-500 min-h-[2px]"
+                      className="w-full bg-gradient-to-t from-teal-500 to-cyan-500 rounded-t-md transition-all duration-500 min-h-[2px]"
                       style={{ height: `${(val / maxDay) * 100}%` }}
                     />
                   </div>
