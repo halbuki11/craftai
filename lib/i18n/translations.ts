@@ -53,6 +53,8 @@ const translations = {
   // Welcome
   "welcome.hello": { en: "Hello,", tr: "Merhaba," },
   "welcome.howCanIHelp": { en: "How can I help you today?", tr: "Bugün size nasıl yardımcı olabilirim?" },
+  "welcome.pickSkill": { en: "Pick a skill or just start typing", tr: "Bir yetenek seçin veya yazmaya başlayın" },
+  "welcome.orJustType": { en: "or just type anything below — AI will figure it out", tr: "veya aşağıya istediğinizi yazın — AI anlayacaktır" },
   "welcome.skills": { en: "Skills", tr: "Yetenekler" },
 
   // Subscription
