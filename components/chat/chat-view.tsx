@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { ChatMessage } from "./chat-message";
 import { ChatWelcome } from "./chat-welcome";
 import { useAutoResizeTextarea } from "@/components/ui/animated-ai-chat";
+import { useI18n } from "@/lib/i18n/context";
 
 export interface TokenInfo {
   input: number;
@@ -81,6 +82,7 @@ export function ChatView() {
   const [currentNoteId, setCurrentNoteId] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [allowedModels, setAllowedModels] = useState<string[]>([]);
+  const { t } = useI18n();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const streamBufferRef = useRef("");
   const rafRef = useRef<number | null>(null);
@@ -762,7 +764,7 @@ export function ChatView() {
                     adjustHeight();
                   }}
                   onKeyDown={handleKeyDown}
-                  placeholder={activeSkill ? `Ask ${activeSkill.title}...` : "Message CraftAI or type / for skills..."}
+                  placeholder={activeSkill ? t("chat.askSkill", { skill: activeSkill.title }) : t("chat.placeholder")}
                   disabled={sending}
                   className={cn(
                     "w-full px-4 py-3",
@@ -926,11 +928,9 @@ export function ChatView() {
 
             <p className="text-center text-[11px] text-white/30 mt-4 leading-relaxed font-mono">
               {isLoggedIn === false ? (
-                <span>
-                  <a href="/signup" className="text-white hover:underline transition-colors">Sign up</a> or <a href="/login" className="text-white hover:underline transition-colors">sign in</a> to start chatting
-                </span>
+                <span>{t("chat.signUpPrompt")}</span>
               ) : (
-                "CraftAI can make mistakes. Verify important info."
+                t("chat.disclaimer")
               )}
             </p>
           </div>

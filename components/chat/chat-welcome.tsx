@@ -7,6 +7,7 @@ import {
   Wallet, Calculator, Mail, Share2, BookOpen, CheckCircle, HeartPulse,
   Flame, Users, Shield, Lightbulb, MessageSquare, Code, Sparkles,
 } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   "pen-tool": <PenLine className="w-4 h-4" />,
@@ -49,6 +50,7 @@ interface ChatWelcomeProps {
 }
 
 export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
+  const { t } = useI18n();
   const [skills, setSkills] = useState<Skill[]>([]);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
             >
-              <span className="text-gemini-gradient">Hello,</span>
+              <span className="text-gemini-gradient">{t("welcome.hello")}</span>
             </motion.h1>
             <motion.h2
               className="text-2xl sm:text-3xl font-medium text-white/40 mt-2"
@@ -91,7 +93,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              How can I help you today?
+              {t("welcome.howCanIHelp")}
             </motion.h2>
           </div>
 
@@ -125,7 +127,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
               className="space-y-3"
             >
               <p className="text-[11px] font-medium text-white/20 uppercase tracking-wider text-center">
-                Skills
+                {t("welcome.skills")}
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {skills.map((skill, index) => (

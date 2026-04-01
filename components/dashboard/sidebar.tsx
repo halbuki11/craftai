@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Plus, X, MessageSquare, CreditCard, LogIn, LogOut, Loader2, Zap, Trash2, Search } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Conversation {
   id: string;
@@ -18,29 +19,29 @@ interface GroupedConversations {
   conversations: Conversation[];
 }
 
-function groupConversationsByDate(conversations: Conversation[]): GroupedConversations[] {
+function groupConversationsByDate(conversations: Conversation[], labels: { today: string; yesterday: string; thisWeek: string; older: string }): GroupedConversations[] {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const yesterday = new Date(today.getTime() - 86400000);
   const weekAgo = new Date(today.getTime() - 7 * 86400000);
 
   const groups: Record<string, Conversation[]> = {
-    Today: [],
-    Yesterday: [],
-    "This Week": [],
-    Older: [],
+    [labels.today]: [],
+    [labels.yesterday]: [],
+    [labels.thisWeek]: [],
+    [labels.older]: [],
   };
 
   for (const conv of conversations) {
     const date = new Date(conv.created_at);
     if (date >= today) {
-      groups["Today"].push(conv);
+      groups[labels.today].push(conv);
     } else if (date >= yesterday) {
-      groups["Yesterday"].push(conv);
+      groups[labels.yesterday].push(conv);
     } else if (date >= weekAgo) {
-      groups["This Week"].push(conv);
+      groups[labels.thisWeek].push(conv);
     } else {
-      groups["Older"].push(conv);
+      groups[labels.older].push(conv);
     }
   }
 
@@ -63,6 +64,7 @@ function formatTokens(n: number): string {
 }
 
 export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) {
+  const { t } = useI18n();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
@@ -133,7 +135,12 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
   const filtered = searchQuery
     ? conversations.filter((c) => c.title.toLowerCase().includes(searchQuery.toLowerCase()))
     : conversations;
-  const grouped = groupConversationsByDate(filtered);
+  const grouped = groupConversationsByDate(filtered, {
+    today: t("sidebar.today"),
+    yesterday: t("sidebar.yesterday"),
+    thisWeek: t("sidebar.thisWeek"),
+    older: t("sidebar.older"),
+  });
 
   return (
     <>
@@ -182,7 +189,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
             }}
             className="w-full flex items-center justify-between px-4 py-3 rounded-full bg-[#1e1f20] hover:bg-white/[0.08] text-sm font-medium text-white shadow-sm transition-colors border border-white/[0.04]"
           >
-            New chat
+            {t("sidebar.newChat")}
             <Plus className="w-5 h-5 text-white/60" />
           </button>
         </div>
@@ -196,7 +203,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search"
+                placeholder={t("sidebar.search")}
                 className="w-full pl-9 pr-4 py-2.5 rounded-full bg-[#1e1f20] text-sm text-white/90 placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 transition-colors border border-transparent"
               />
             </div>
@@ -214,8 +221,8 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
               <div className="w-10 h-10 rounded-xl bg-white/[0.03] flex items-center justify-center mx-auto mb-3">
                 <MessageSquare className="w-5 h-5 text-white/15" />
               </div>
-              <p className="text-xs text-white/25 leading-relaxed">
-                Conversations will<br />appear here
+              <p className="text-xs text-white/25 leading-relaxed whitespace-pre-line">
+                {t("sidebar.noChats")}
               </p>
             </div>
           ) : (
@@ -266,7 +273,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-[10px] font-medium text-white/40 flex items-center gap-1">
                   <Zap className="w-3 h-3" />
-                  {formatTokens(tokensRemaining)} remaining
+                  {formatTokens(tokensRemaining)} {t("sidebar.remaining")}
                 </span>
                 <span className="text-[10px] text-white/20 capitalize">{planName}</span>
               </div>
@@ -285,7 +292,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
             className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-white/50 hover:text-white/90 hover:bg-white/[0.04] transition-colors"
           >
             <CreditCard className="w-4 h-4" />
-            Plans
+            {t("sidebar.plans")}
           </Link>
 
           {isLoggedIn ? (
@@ -299,7 +306,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-white/50 hover:text-white/90 hover:bg-white/[0.04] transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              Sign Out
+              {t("sidebar.signOut")}
             </button>
           ) : (
             <Link
@@ -308,7 +315,7 @@ export function Sidebar({ open, onClose, onNewChat, onLoadChat }: SidebarProps) 
               className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-white/50 hover:text-white/90 hover:bg-white/[0.04] transition-colors"
             >
               <LogIn className="w-4 h-4" />
-              Sign In
+              {t("sidebar.signIn")}
             </Link>
           )}
         </div>

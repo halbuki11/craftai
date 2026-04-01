@@ -3,6 +3,7 @@ import { Outfit, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { PWARegister } from "@/components/pwa-register";
 import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProvider } from "@/lib/i18n/context";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 
@@ -65,7 +66,9 @@ export default function RootLayout({
     <html lang="en" className={`dark ${outfit.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
-          {children}
+          <I18nProvider>
+            {children}
+          </I18nProvider>
           <Toaster />
           <PWARegister />
         </ThemeProvider>
