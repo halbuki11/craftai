@@ -152,6 +152,16 @@ const translations = {
   "ws.admin": { en: "Admin", tr: "Yönetici" },
   "ws.member": { en: "Member", tr: "Üye" },
 
+  // API
+  "api.title": { en: "API", tr: "API" },
+  "api.desc": { en: "Manage your API keys for developer access", tr: "Geliştirici erişimi için API anahtarlarınızı yönetin" },
+  "api.createKey": { en: "Create API Key", tr: "API Anahtarı Oluştur" },
+  "api.noKeys": { en: "No API keys yet. Create one to use the CraftAI API.", tr: "Henüz API anahtarı yok. API'yi kullanmak için bir tane oluşturun." },
+  "api.keyName": { en: "Key name", tr: "Anahtar adı" },
+  "api.copyWarning": { en: "Copy this key now — it won't be shown again", tr: "Bu anahtarı şimdi kopyalayın — tekrar gösterilmeyecek" },
+  "api.active": { en: "Active", tr: "Aktif" },
+  "api.revoke": { en: "Revoke", tr: "İptal" },
+
   "common.delete": { en: "Delete", tr: "Sil" },
   "common.cancel": { en: "Cancel", tr: "İptal" },
   "common.loading": { en: "Loading...", tr: "Yükleniyor..." },
