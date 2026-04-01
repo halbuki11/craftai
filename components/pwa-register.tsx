@@ -1,6 +1,13 @@
 "use client";
 
-// PWA registration disabled — no service worker file exists yet
+import { useEffect } from "react";
+
 export function PWARegister() {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  }, []);
+
   return null;
 }

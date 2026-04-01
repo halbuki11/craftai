@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 const protectedPaths = ["/notes", "/settings", "/subscription", "/todos", "/usage", "/skills"];
-const authPaths = ["/login", "/signup"];
+const authPaths = ["/login", "/signup", "/welcome"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -34,9 +34,7 @@ export async function middleware(request: NextRequest) {
   const isAuthPage = authPaths.some((p) => pathname.startsWith(p));
 
   if (isProtected && !user) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(new URL("/welcome", request.url));
   }
 
   // Logged-in users visiting auth pages → redirect to dashboard

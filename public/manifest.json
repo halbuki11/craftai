@@ -1,14 +1,14 @@
 {
-  "name": "CraftAI",
+  "name": "CraftAI — AI Skills Platform",
   "short_name": "CraftAI",
-  "description": "AI yeteneklerini kesfet, kredilerini kullan, isini yaptir",
+  "description": "Chat with AI models, use specialized skills, get things done.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#1E1F23",
+  "theme_color": "#1E1F23",
   "orientation": "portrait-primary",
-  "lang": "tr",
+  "lang": "en",
   "categories": ["productivity", "utilities"],
   "icons": [
     {
@@ -26,14 +26,12 @@
   ],
   "shortcuts": [
     {
-      "name": "Yetenekler",
-      "short_name": "Skills",
+      "name": "Skills",
       "url": "/skills",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Kullanim",
-      "short_name": "Usage",
+      "name": "Usage",
       "url": "/usage",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }

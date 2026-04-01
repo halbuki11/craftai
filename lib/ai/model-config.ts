@@ -1,5 +1,5 @@
-export type Provider = 'anthropic' | 'openai';
-export type ModelId = 'haiku' | 'sonnet' | 'opus' | 'gpt-4o' | 'gpt-4o-mini';
+export type Provider = 'anthropic' | 'openai' | 'google';
+export type ModelId = 'haiku' | 'sonnet' | 'opus' | 'gpt-4o' | 'gpt-4o-mini' | 'gemini-flash' | 'gemini-pro';
 
 export interface ModelConfig {
   id: ModelId;
@@ -21,6 +21,15 @@ export const MODELS: Record<ModelId, ModelConfig> = {
     description: 'Fastest & cheapest',
     costPer1M: 0.38,
   },
+  'gemini-flash': {
+    id: 'gemini-flash',
+    provider: 'google',
+    apiModel: 'gemini-2.0-flash',
+    name: 'Gemini 2.0 Flash',
+    maxTokens: 8192,
+    description: 'Ultra fast & free',
+    costPer1M: 0.10,
+  },
   haiku: {
     id: 'haiku',
     provider: 'anthropic',
@@ -38,6 +47,15 @@ export const MODELS: Record<ModelId, ModelConfig> = {
     maxTokens: 16384,
     description: 'Versatile & popular',
     costPer1M: 6.25,
+  },
+  'gemini-pro': {
+    id: 'gemini-pro',
+    provider: 'google',
+    apiModel: 'gemini-2.5-pro-preview-06-05',
+    name: 'Gemini 2.5 Pro',
+    maxTokens: 16384,
+    description: 'Google\'s best model',
+    costPer1M: 3.50,
   },
   sonnet: {
     id: 'sonnet',
