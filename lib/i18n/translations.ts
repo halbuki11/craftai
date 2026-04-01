@@ -133,6 +133,12 @@ const translations = {
 
   // Common
   "chat.exportPdf": { en: "Export as PDF", tr: "PDF olarak indir" },
+
+  // Files
+  "files.title": { en: "Files", tr: "Dosyalar" },
+  "files.desc": { en: "Your uploaded files", tr: "Yüklediğiniz dosyalar" },
+  "files.noFiles": { en: "No files uploaded yet", tr: "Henüz dosya yüklenmedi" },
+  "files.openChat": { en: "Open chat", tr: "Sohbeti aç" },
   "common.delete": { en: "Delete", tr: "Sil" },
   "common.cancel": { en: "Cancel", tr: "İptal" },
   "common.loading": { en: "Loading...", tr: "Yükleniyor..." },

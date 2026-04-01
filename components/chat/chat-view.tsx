@@ -476,6 +476,21 @@ export function ChatView() {
                 if (data.noteId) {
                   setCurrentNoteId(data.noteId);
                   window.history.replaceState({}, "", `/?chat=${data.noteId}`);
+                  // Save file upload records
+                  if (currentAttachments.length > 0) {
+                    for (const file of currentAttachments) {
+                      fetch("/api/files", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          fileName: file.name,
+                          fileType: file.type,
+                          fileSize: file.base64?.length || 0,
+                          noteId: data.noteId,
+                        }),
+                      }).catch(() => {});
+                    }
+                  }
                 }
                 // Get the full accumulated text and merge directly into messages
                 const fullText = (streamingContentRef.current || "") + finalContent;

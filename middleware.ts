@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const protectedPaths = ["/notes", "/settings", "/subscription", "/todos", "/usage", "/skills"];
+const protectedPaths = ["/notes", "/settings", "/subscription", "/todos", "/usage", "/skills", "/files"];
 const authPaths = ["/login", "/signup", "/welcome"];
 
 export async function middleware(request: NextRequest) {
