@@ -26,12 +26,12 @@ begin
   )
   on conflict (user_id) do nothing;
 
-  -- Free plan: 15K tokens per month
+  -- Free plan: 50K tokens per month
   insert into public.user_credits (user_id, credits_remaining, credits_total, period_start, period_end)
   values (
     new.id,
-    15000,
-    15000,
+    50000,
+    50000,
     now(),
     now() + interval '30 days'
   )

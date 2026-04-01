@@ -101,10 +101,8 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
 );
 
 INSERT INTO subscription_plans (id, name, credits_per_month, price_monthly, allowed_models, sort_order) VALUES
-  ('free',     'Free',     15000,     0,    '{haiku}',               0),
-  ('starter',  'Starter',  500000,    900,  '{haiku,sonnet}',        1),
-  ('pro',      'Pro',      2000000,   2900, '{haiku,sonnet,opus}',   2),
-  ('business', 'Business', 10000000,  9900, '{haiku,sonnet,opus}',   3)
+  ('free',     'Free',     50000,     0,    '{haiku,gpt-4o-mini}',                0),
+  ('pro',      'Pro',      2000000,   1900, '{haiku,sonnet,gpt-4o,gpt-4o-mini}',  1)
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================
@@ -131,8 +129,8 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
 -- ============================================
 CREATE TABLE IF NOT EXISTS user_credits (
   user_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
-  credits_remaining INTEGER NOT NULL DEFAULT 15000,
-  credits_total INTEGER NOT NULL DEFAULT 15000,
+  credits_remaining INTEGER NOT NULL DEFAULT 50000,
+  credits_total INTEGER NOT NULL DEFAULT 50000,
   period_start TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   period_end TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '30 days'),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -246,7 +244,7 @@ BEGIN
   ON CONFLICT (user_id) DO NOTHING;
 
   INSERT INTO public.user_credits (user_id, credits_remaining, credits_total, period_start, period_end)
-  VALUES (NEW.id, 15000, 15000, NOW(), NOW() + INTERVAL '30 days')
+  VALUES (NEW.id, 50000, 50000, NOW(), NOW() + INTERVAL '30 days')
   ON CONFLICT (user_id) DO NOTHING;
 
   RETURN NEW;
@@ -299,7 +297,7 @@ BEGIN
       SELECT sp.credits_per_month INTO v_plan_credits
       FROM public.subscription_plans sp WHERE sp.id = v_plan_id;
 
-      v_plan_credits := COALESCE(v_plan_credits, 15000);
+      v_plan_credits := COALESCE(v_plan_credits, 50000);
 
       UPDATE public.user_credits SET
         credits_remaining = v_plan_credits,

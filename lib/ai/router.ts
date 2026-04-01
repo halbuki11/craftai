@@ -179,7 +179,7 @@ export async function analyzeImage(imageUrl: string, instruction?: string, model
   const claude = (await import('./claude')).getClaudeClient();
 
   const response = await claude.messages.create({
-    model: model === 'opus' ? 'claude-opus-4-6' : 'claude-sonnet-4-6',
+    model: 'claude-sonnet-4-6',
     max_tokens: 4096,
     messages: [
       {

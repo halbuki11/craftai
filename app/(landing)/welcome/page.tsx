@@ -75,17 +75,17 @@ export default function LandingPage() {
       <section className="text-center px-6 pt-20 pb-16 max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet-500/10 border border-violet-500/20 rounded-full text-xs text-violet-300 mb-6">
           <Sparkles className="w-3 h-3" />
-          Powered by Claude, GPT-4o & Gemini
+          Claude + GPT-4o in one place
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight">
-          Your AI Assistant
+          Two AI Giants.
           <br />
           <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
-            with Superpowers
+            One Platform. $19/mo.
           </span>
         </h1>
         <p className="text-lg text-white/50 mt-6 max-w-2xl mx-auto leading-relaxed">
-          Chat with the world&apos;s best AI models. Use 19+ specialized skills for writing, coding, research, and more. Free to start.
+          Stop paying $40/month for ChatGPT Plus and Claude Pro separately. Get both with 20 expert skills for writing, coding, research, and more.
         </p>
         <div className="flex items-center justify-center gap-4 mt-8">
           <Link
@@ -125,11 +125,10 @@ export default function LandingPage() {
       <section className="px-6 py-16 max-w-4xl mx-auto text-center">
         <h2 className="text-2xl font-bold text-white mb-2">Simple Pricing</h2>
         <p className="text-white/40 mb-8">Start free, upgrade when you need more.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto">
           {[
-            { name: "Free", price: "$0", tokens: "15K tokens/mo", models: "Haiku + Gemini Flash" },
-            { name: "Starter", price: "$9", tokens: "500K tokens/mo", models: "All models", popular: true },
-            { name: "Pro", price: "$29", tokens: "2M tokens/mo", models: "All models + Opus" },
+            { name: "Free", price: "$0", tokens: "50K tokens/mo", models: "Haiku + GPT-4o Mini" },
+            { name: "Pro", price: "$19", tokens: "2M tokens/mo", models: "Claude Sonnet + GPT-4o + more", popular: true },
           ].map((plan) => (
             <div
               key={plan.name}

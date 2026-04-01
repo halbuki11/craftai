@@ -20,37 +20,21 @@ const PLANS: Plan[] = [
   {
     id: "free",
     name: "Free",
-    tokens: "15K",
-    tokensNum: 15000,
+    tokens: "50K",
+    tokensNum: 50000,
     price: 0,
-    modelKeys: ["Claude 4.5 Haiku"],
+    modelKeys: ["Claude 4.5 Haiku", "GPT-4o Mini"],
     highlightKey: "sub.tryIt",
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    tokens: "500K",
-    tokensNum: 500000,
-    price: 9,
-    modelKeys: ["Claude 4.5 Haiku", "Claude Sonnet 4.6"],
-    highlightKey: "sub.popular",
-    popular: true,
   },
   {
     id: "pro",
     name: "Pro",
     tokens: "2M",
     tokensNum: 2000000,
-    price: 29,
-    modelKeys: ["sub.allModels", "sub.includingOpus"],
-  },
-  {
-    id: "business",
-    name: "Business",
-    tokens: "10M",
-    tokensNum: 10000000,
-    price: 99,
-    modelKeys: ["sub.allModels", "sub.prioritySupport"],
+    price: 19,
+    modelKeys: ["Claude 4.5 Haiku", "Claude Sonnet 4.6", "GPT-4o", "GPT-4o Mini"],
+    highlightKey: "sub.popular",
+    popular: true,
   },
 ];
 
@@ -74,7 +58,7 @@ export default function SubscriptionPage() {
       .then((data) => {
         setCurrentPlan(data.subscription?.plan_id || "free");
         if (data.balance) {
-          setTokensTotal(data.balance.credits_total || 15000);
+          setTokensTotal(data.balance.credits_total || 50000);
           setTokensUsed((data.balance.credits_total || 0) - (data.balance.credits_remaining || 0));
         }
       })

@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
         .eq('id', sub.plan_id)
         .single();
 
-      const credits = plan?.credits_per_month || 15000;
+      const credits = plan?.credits_per_month || 50000;
       const now = new Date();
       const periodEnd = new Date(now);
       periodEnd.setDate(periodEnd.getDate() + 30);

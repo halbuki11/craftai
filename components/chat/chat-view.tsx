@@ -66,8 +66,7 @@ const MODELS: Record<string, ModelDef> = {
   "gpt-4o-mini": { label: "GPT-4o Mini", provider: "OpenAI", desc: "Fastest & cheapest", apiId: "gpt-4o-mini" },
   "claude-4.5-haiku": { label: "Claude 4.5 Haiku", provider: "Anthropic", desc: "Fast & efficient", apiId: "haiku" },
   "gpt-4o": { label: "GPT-4o", provider: "OpenAI", desc: "Versatile & popular", apiId: "gpt-4o" },
-  "claude-sonnet-4.6": { label: "Claude Sonnet 4.6", provider: "Anthropic", desc: "Balanced performance", apiId: "sonnet" },
-  "claude-opus-4.6": { label: "Claude Opus 4.6", provider: "Anthropic", desc: "Most powerful", apiId: "opus" },
+  "claude-sonnet-4.6": { label: "Claude Sonnet 4.6", provider: "Anthropic", desc: "Most powerful", apiId: "sonnet" },
 };
 
 export function ChatView() {
@@ -104,9 +103,7 @@ export function ChatView() {
             // Fetch allowed models from plan
             const planModels: Record<string, string[]> = {
               free: ["haiku", "gpt-4o-mini"],
-              starter: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o"],
-              pro: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o", "opus"],
-              business: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o", "opus"],
+              pro: ["haiku", "gpt-4o-mini", "sonnet", "gpt-4o"],
             };
             setAllowedModels(planModels[planId] || ["haiku"]);
           }).catch(() => setAllowedModels(["haiku"]));

@@ -36,7 +36,6 @@ function formatTokens(n: number): string {
 const MODEL_LABELS: Record<string, string> = {
   haiku: "Claude 4.5 Haiku",
   sonnet: "Claude Sonnet 4.6",
-  opus: "Claude Opus 4.6",
   "gpt-4o": "GPT-4o",
   "gpt-4o-mini": "GPT-4o Mini",
 };

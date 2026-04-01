@@ -74,7 +74,7 @@ async function autoRenewPlan(supabase: any, userId: string): Promise<{ credits: 
     .eq('id', sub.plan_id)
     .single();
 
-  const credits = plan?.credits_per_month || 15000;
+  const credits = plan?.credits_per_month || 50000;
 
   const now = new Date();
   const periodEnd = new Date(now);

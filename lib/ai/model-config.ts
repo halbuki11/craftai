@@ -1,5 +1,5 @@
 export type Provider = 'anthropic' | 'openai';
-export type ModelId = 'haiku' | 'sonnet' | 'opus' | 'gpt-4o' | 'gpt-4o-mini';
+export type ModelId = 'haiku' | 'sonnet' | 'gpt-4o' | 'gpt-4o-mini';
 
 export interface ModelConfig {
   id: ModelId;
@@ -47,15 +47,6 @@ export const MODELS: Record<ModelId, ModelConfig> = {
     maxTokens: 16384,
     description: 'Balanced performance',
     costPer1M: 9.00,
-  },
-  opus: {
-    id: 'opus',
-    provider: 'anthropic',
-    apiModel: 'claude-opus-4-6',
-    name: 'Claude Opus 4.6',
-    maxTokens: 32000,
-    description: 'Most powerful',
-    costPer1M: 45.00,
   },
 };
 
