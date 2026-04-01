@@ -80,7 +80,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
               <Sparkles className="w-7 h-7 text-white" />
             </motion.div>
             <motion.h1
-              className="text-4xl sm:text-5xl font-semibold tracking-tight text-white/95"
+              className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white/95"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
@@ -88,7 +88,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
               <span className="text-gemini-gradient">{t("welcome.hello")}</span>
             </motion.h1>
             <motion.h2
-              className="text-2xl sm:text-3xl font-medium text-white/40 mt-2"
+              className="text-xl sm:text-2xl md:text-3xl font-medium text-white/40 mt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -98,7 +98,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
           </div>
 
           {/* Suggestion cards */}
-          <div className="grid grid-cols-2 gap-3 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8">
             {SUGGESTIONS.map((item, index) => {
               const label = t(item.key);
               return (
@@ -146,7 +146,7 @@ export function ChatWelcome({ onSuggestionClick }: ChatWelcomeProps) {
                       {ICON_MAP[skill.icon] || <MessageSquare className="w-4 h-4" />}
                     </span>
                     <span className="text-[12px] text-white/40 group-hover:text-white/70 transition-colors">
-                      {skill.title}
+                      {t(`skill.${skill.id}` as any) !== `skill.${skill.id}` ? t(`skill.${skill.id}` as any) : skill.title}
                     </span>
                   </motion.button>
                 ))}

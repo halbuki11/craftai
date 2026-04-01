@@ -1,22 +1,41 @@
-import { createClient } from "@/lib/supabase/server";
-import { User, Mail, Calendar, Globe, Shield, Cpu } from "lucide-react";
-import { TimezoneSelector } from "@/components/settings/timezone-selector";
-import { ModelSelector } from "@/components/settings/model-selector";
+"use client";
 
-export default async function SettingsPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+import { useEffect, useState } from "react";
+import { User, Mail, Calendar, Globe, Shield, Cpu, Loader2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
+
+export default function SettingsPage() {
+  const { t, locale } = useI18n();
+  const [user, setUser] = useState<{ email?: string; created_at?: string } | null>(null);
+  const [profile, setProfile] = useState<{ timezone?: string; settings?: { preferred_model?: string } } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    import("@/lib/supabase/client").then(({ createClient }) => {
+      const supabase = createClient();
+      supabase.auth.getUser().then(({ data }) => {
+        if (data.user) {
+          setUser({ email: data.user.email, created_at: data.user.created_at });
+          supabase.from("profiles").select("timezone, settings").eq("id", data.user.id).single().then(({ data: p }) => {
+            setProfile(p);
+          });
+        }
+      }).finally(() => setLoading(false));
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-white/30" />
+      </div>
+    );
+  }
 
   if (!user) return null;
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("timezone, settings")
-    .eq("id", user.id)
-    .single();
-
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -25,12 +44,9 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white/90">Settings</h1>
-        <p className="text-white/50 mt-1">
-          Your account details and connections
-        </p>
+        <h1 className="text-2xl font-bold text-white/90">{t("settings.title")}</h1>
+        <p className="text-white/50 mt-1">{t("settings.desc")}</p>
       </div>
 
       <div className="space-y-6">
@@ -42,10 +58,8 @@ export default async function SettingsPage() {
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-white/90">Account Info</h2>
-                <p className="text-xs text-white/40">
-                  Your basic account details
-                </p>
+                <h2 className="text-lg font-bold text-white/90">{t("settings.accountInfo")}</h2>
+                <p className="text-xs text-white/40">{t("settings.accountInfoDesc")}</p>
               </div>
             </div>
           </div>
@@ -56,11 +70,9 @@ export default async function SettingsPage() {
                 <div className="p-1.5 bg-violet-500/10 rounded-lg">
                   <Mail className="w-4 h-4 text-violet-400" />
                 </div>
-                <span className="text-sm font-medium">Email</span>
+                <span className="text-sm font-medium">{t("settings.email")}</span>
               </div>
-              <span className="text-sm font-semibold text-white/90">
-                {user.email}
-              </span>
+              <span className="text-sm font-semibold text-white/90">{user.email}</span>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3.5 border-b border-white/[0.06]">
@@ -68,10 +80,10 @@ export default async function SettingsPage() {
                 <div className="p-1.5 bg-violet-500/10 rounded-lg">
                   <Calendar className="w-4 h-4 text-violet-400" />
                 </div>
-                <span className="text-sm font-medium">Joined</span>
+                <span className="text-sm font-medium">{t("settings.joined")}</span>
               </div>
               <span className="text-sm font-semibold text-white/90">
-                {user.created_at ? formatDate(user.created_at) : "Unknown"}
+                {user.created_at ? formatDate(user.created_at) : "—"}
               </span>
             </div>
 
@@ -80,13 +92,11 @@ export default async function SettingsPage() {
                 <div className="p-1.5 bg-emerald-500/10 rounded-lg">
                   <Shield className="w-4 h-4 text-emerald-400" />
                 </div>
-                <span className="text-sm font-medium">Status</span>
+                <span className="text-sm font-medium">{t("settings.status")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-sm font-semibold text-emerald-400">
-                  Active
-                </span>
+                <span className="text-sm font-semibold text-emerald-400">{t("settings.active")}</span>
               </div>
             </div>
           </div>
@@ -100,15 +110,13 @@ export default async function SettingsPage() {
                 <Globe className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-white/90">Timezone</h2>
-                <p className="text-xs text-white/40">
-                  Timezone for calendar and reminders
-                </p>
+                <h2 className="text-lg font-bold text-white/90">{t("settings.timezone")}</h2>
+                <p className="text-xs text-white/40">{t("settings.timezoneDesc")}</p>
               </div>
             </div>
           </div>
           <div className="p-5">
-            <TimezoneSelector currentTimezone={profile?.timezone || "Europe/Istanbul"} />
+            <p className="text-sm text-white/70">{profile?.timezone || "Europe/Istanbul"}</p>
           </div>
         </div>
 
@@ -120,21 +128,15 @@ export default async function SettingsPage() {
                 <Cpu className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-white/90">AI Model</h2>
-                <p className="text-xs text-white/40">
-                  Choose your default AI model
-                </p>
+                <h2 className="text-lg font-bold text-white/90">{t("settings.aiModel")}</h2>
+                <p className="text-xs text-white/40">{t("settings.aiModelDesc")}</p>
               </div>
             </div>
           </div>
           <div className="p-5">
-            <ModelSelector
-              currentModel={profile?.settings?.preferred_model || "sonnet"}
-              allowedModels={["haiku", "sonnet", "opus"]}
-            />
+            <p className="text-sm text-white/70 capitalize">{profile?.settings?.preferred_model || "sonnet"}</p>
           </div>
         </div>
-
       </div>
     </div>
   );

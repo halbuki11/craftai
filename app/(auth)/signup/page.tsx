@@ -50,7 +50,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-xl shadow-violet-500/20 mb-5">
           <Sparkles className="w-6 h-6 text-white" />

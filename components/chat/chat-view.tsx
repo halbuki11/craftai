@@ -15,6 +15,7 @@ import {
   X,
   FileText,
   ImageIcon,
+  Download,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ChatMessage } from "./chat-message";
@@ -598,7 +599,29 @@ export function ChatView() {
             handleSubmit(prompt);
           }} />
         ) : (
-          <div className="max-w-3xl mx-auto px-4 py-6">
+          <div className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+            {/* Export button */}
+            {!sending && messages.length > 1 && (
+              <div className="flex justify-end mb-3">
+                <button
+                  onClick={() => {
+                    const text = messages.map(m => `${m.role === "user" ? "You" : "CraftAI"}:\n${m.content}`).join("\n\n---\n\n");
+                    const blob = new Blob([text], { type: "text/plain" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `craftai-chat-${new Date().toISOString().slice(0, 10)}.txt`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    toast.success(t("chat.exported" as any) || "Exported");
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/30 hover:text-white/70 hover:bg-white/[0.05] transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  {t("chat.exportPdf")}
+                </button>
+              </div>
+            )}
             {messages.map((message, i) => {
               const isThisStreaming = sending && i === messages.length - 1 && message.role === "assistant";
               return (

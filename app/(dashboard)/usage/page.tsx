@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BarChart3, Zap, Cpu, Crown, Loader2, Clock, Sparkles } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface UsageEntry {
   id: string;
@@ -34,6 +35,7 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 
 export default function UsagePage() {
+  const { t, locale } = useI18n();
   const [data, setData] = useState<CreditData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -68,8 +70,8 @@ export default function UsagePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white/90">Usage</h1>
-        <p className="text-white/50 mt-1">Your credit usage details</p>
+        <h1 className="text-2xl font-bold text-white/90">{t("usage.title")}</h1>
+        <p className="text-white/50 mt-1">{t("usage.desc")}</p>
       </div>
 
       {/* Stats */}
@@ -80,10 +82,8 @@ export default function UsagePage() {
               <Zap className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white/90">
-                {credits_remaining}
-              </p>
-              <p className="text-sm text-white/50">Remaining</p>
+              <p className="text-2xl font-bold text-white/90">{credits_remaining}</p>
+              <p className="text-sm text-white/50">{t("usage.remaining")}</p>
             </div>
           </div>
         </div>
@@ -94,10 +94,8 @@ export default function UsagePage() {
               <BarChart3 className="w-5 h-5 text-indigo-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white/90">
-                {usedCredits}
-              </p>
-              <p className="text-sm text-white/50">Used</p>
+              <p className="text-2xl font-bold text-white/90">{usedCredits}</p>
+              <p className="text-sm text-white/50">{t("usage.used")}</p>
             </div>
           </div>
         </div>
@@ -108,10 +106,8 @@ export default function UsagePage() {
               <Sparkles className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white/90">
-                {usage.length}
-              </p>
-              <p className="text-sm text-white/50">Total Requests</p>
+              <p className="text-2xl font-bold text-white/90">{usage.length}</p>
+              <p className="text-sm text-white/50">{t("usage.totalRequests")}</p>
             </div>
           </div>
         </div>
@@ -123,9 +119,9 @@ export default function UsagePage() {
             </div>
             <div>
               <p className="text-sm font-bold text-white/90">
-                {new Date(period_end).toLocaleDateString("en-US", { day: "numeric", month: "short" })}
+                {new Date(period_end).toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", { day: "numeric", month: "short" })}
               </p>
-              <p className="text-sm text-white/50">Period End</p>
+              <p className="text-sm text-white/50">{t("usage.periodEnd")}</p>
             </div>
           </div>
         </div>
@@ -134,7 +130,7 @@ export default function UsagePage() {
       {/* Progress */}
       <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-white/70">Credit Usage</span>
+          <span className="text-sm font-medium text-white/70">{t("usage.creditUsage")}</span>
           <span className="text-sm font-bold text-violet-400">
             {credits_remaining}/{credits_total}
           </span>
@@ -150,7 +146,7 @@ export default function UsagePage() {
       {/* Model Breakdown */}
       {Object.keys(byModel).length > 0 && (
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-white/90 mb-4">Model Breakdown</h3>
+          <h3 className="text-sm font-bold text-white/90 mb-4">{t("usage.modelBreakdown")}</h3>
           <div className="space-y-3">
             {Object.entries(byModel).map(([model, credits]) => {
               const config = MODEL_CONFIG[model] || MODEL_CONFIG.sonnet;
@@ -162,14 +158,14 @@ export default function UsagePage() {
                   <div className={`p-1.5 rounded-lg ${config.bg}`}>
                     <Icon className={`w-3.5 h-3.5 ${config.color}`} />
                   </div>
-                  <span className="text-xs font-semibold text-white/70 w-16">{config.label}</span>
+                  <span className="text-xs font-semibold text-white/70 w-14 sm:w-16">{config.label}</span>
                   <div className="flex-1 h-2 bg-white/[0.05] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
                       style={{ width: `${modelPct}%` }}
                     />
                   </div>
-                  <span className="text-xs font-bold text-white/40 w-20 text-right">{credits} credits</span>
+                  <span className="text-xs font-bold text-white/40 w-20 text-right">{credits} {t("usage.credits")}</span>
                 </div>
               );
             })}
@@ -181,7 +177,7 @@ export default function UsagePage() {
       {usage.length > 0 && (
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden">
           <div className="p-5 border-b border-white/[0.06]">
-            <h3 className="text-sm font-bold text-white/90">Recent Usage</h3>
+            <h3 className="text-sm font-bold text-white/90">{t("usage.recentUsage")}</h3>
           </div>
           <div className="divide-y divide-white/[0.06]">
             {usage.map((entry) => {
@@ -195,7 +191,7 @@ export default function UsagePage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white/90">
-                      {entry.skill_id || entry.action_type || "General"}
+                      {entry.skill_id || entry.action_type || t("usage.general")}
                     </p>
                     <p className="text-xs text-white/40">
                       {SOURCE_LABELS[entry.source] || entry.source} · {config.label}
@@ -204,7 +200,7 @@ export default function UsagePage() {
                   <div className="text-right shrink-0">
                     <p className="text-sm font-bold text-white/90">-{entry.credits_used}</p>
                     <p className="text-xs text-white/40">
-                      {new Date(entry.created_at).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                      {new Date(entry.created_at).toLocaleTimeString(locale === "tr" ? "tr-TR" : "en-US", { hour: "2-digit", minute: "2-digit" })}
                     </p>
                   </div>
                 </div>

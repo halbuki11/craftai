@@ -47,7 +47,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-xl shadow-violet-500/20 mb-5">
           <Sparkles className="w-6 h-6 text-white" />
@@ -109,6 +109,12 @@ export default function LoginPage() {
               className="w-full pl-10 pr-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
             />
           </div>
+        </div>
+
+        <div className="flex justify-end">
+          <Link href="/forgot-password" className="text-xs text-white/30 hover:text-violet-400 transition-colors">
+            {t("auth.forgotPassword")}
+          </Link>
         </div>
 
         <button
